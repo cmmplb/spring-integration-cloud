@@ -1,0 +1,100 @@
+registry {
+  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+  type = "nacos"
+
+  nacos {
+    application = "seata-server" # seata-server  # serverAddr
+    serverAddr = "127.0.0.1:8848"
+    group = "SEATA_GROUP"    # SEATA_GROUP DEFAULT_GROUP
+    namespace = "service_seata"
+    cluster = "default"
+    username = "nacos"
+    password = "nacos"
+
+    #注意：微服务中引入的seata依赖spring-cloud-starter-alibaba-seata版本是2.1.1.RELEASE，
+    #这里配置文件中的registry.nacos.application必须是serverAddr，group必须是DEFAULT_GROUP，
+    #因为该版本的seata客户端获取注册在nacos的seata服务时，写死的参数。所以我们需要把seata注册在nacos的默认分组下，服务名称为serverAddr。
+  }
+  eureka {
+    serviceUrl = "http://localhost:7001/eureka"
+    application = "default"
+    weight = "1"
+  }
+  redis {
+    serverAddr = "localhost:6379"
+    db = 0
+    password = ""
+    cluster = "default"
+    timeout = 0
+  }
+  zk {
+    cluster = "default"
+    serverAddr = "127.0.0.1:2181"
+    sessionTimeout = 6000
+    connectTimeout = 2000
+    username = ""
+    password = ""
+  }
+  consul {
+    cluster = "default"
+    serverAddr = "127.0.0.1:8500"
+    aclToken = ""
+  }
+  etcd3 {
+    cluster = "default"
+    serverAddr = "http://localhost:2379"
+  }
+  sofa {
+    serverAddr = "127.0.0.1:9603"
+    application = "default"
+    region = "DEFAULT_ZONE"
+    datacenter = "DefaultDataCenter"
+    cluster = "default"
+    group = "SEATA_GROUP"
+    addressWaitTime = "3000"
+  }
+  file {
+    name = "file.conf"
+  }
+}
+
+config {
+  # file、nacos 、apollo、zk、consul、etcd3
+  type = "nacos"
+
+  nacos {
+    serverAddr = "127.0.0.1:8848"
+    namespace = "service_seata"
+    group = "SEATA_GROUP"
+    username = "nacos"
+    password = "nacos"
+    dataId = "seataServer.properties"
+  }
+  consul {
+    serverAddr = "127.0.0.1:8500"
+    aclToken = ""
+  }
+  apollo {
+    appId = "seata-server"
+    ## apolloConfigService will cover apolloMeta
+    apolloMeta = "http://192.168.1.204:8801"
+    apolloConfigService = "http://192.168.1.204:8080"
+    namespace = "application"
+    apolloAccesskeySecret = ""
+    cluster = "seata"
+  }
+  zk {
+    serverAddr = "127.0.0.1:2181"
+    sessionTimeout = 6000
+    connectTimeout = 2000
+    username = ""
+    password = ""
+    nodePath = "/seata/seata.properties"
+  }
+  etcd3 {
+    serverAddr = "http://localhost:2379"
+  }
+  file {
+    name = "file.conf"
+  }
+}

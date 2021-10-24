@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: dev
+    #springboot2.4+分组配置
+    group:
+      - dev
+      - local
+  main:
+    #重复bean
+    allow-bean-definition-overriding: true
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: public
+        namespace: public
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: public
+        group: public
+        prefix: client
+        file-extension: yml
+        refresh-enabled: true #开启动态刷新

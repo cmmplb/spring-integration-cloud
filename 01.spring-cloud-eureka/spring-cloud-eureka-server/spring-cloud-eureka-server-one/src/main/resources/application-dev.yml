@@ -1,0 +1,62 @@
+spring:
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: false
+# 调优参考：
+#   https://blog.csdn.net/weixin_41922349/article/details/99655326
+#   https://blog.csdn.net/wo18237095579/article/details/83276352
+#   https://www.cnblogs.com/shihaiming/p/11590748.html
+eureka:
+  server:
+    # 自我保护机制
+    #   作用：
+    #       网络短暂不稳定(网络偶尔抖动、短暂不可用)时保护 "服务的实例列表"，
+    #       即禁止定时任务剔除失效的实例, 以免因为误判而清空部分服务的实例列表
+    #   进入条件：
+    #       最近1分钟接收到的全部服务的续约(通过client心跳机制维持租约)的次数小于指定阈值
+    # ----------------------------------------------------------------------
+    enable-self-preservation: false # 是否开启自我保护机制(true开启，false关闭) #客户端关闭、页面红色文字提示
+    #renewal-percent-threshold: 0.85 # 指定每分钟需要收到的续约次数的阀值，默认值为0.85
+    # 缓存机制
+    #   eureka有3处存放"服务实例列表":
+    #      registry(实时更新, UI取的此处信息)
+    #      readWriteCacheMap(实时更新, 缓存时间：180s)
+    #      readOnlyCacheMap(周期更新, client从此处获取信息)
+    #   client服务实例 -> registry ->(更新周期: 60s) readWriteCacheMap ->(更新周期: 30s) readOnlyCacheMap
+    #   TimeTask -> (清理周期：60s, 清理对象: 90s未续约的服务实例)
+    #       |__ readWriteCacheMap
+    #       |__ readOnlyCacheMap
+    # 注：以上描述未默认情况
+    # client是否从readOnlyCacheMap获取数据
+    # false则client跳过readOnlyCacheMap直接从readWriteCacheMap获取信息
+    #use-read-only-response-cache: false
+    #response-cache-update-interval-ms: 30000 # readWriteCacheMap更新至readOnlyCacheMap周期
+    #response-cache-auto-expiration-in-seconds: 30 # 设置readWriteCacheMap缓存时间(如过期后则从registry中读取)
+    #eviction-interval-timer-in-ms: 30000 # 清理未续约服务实例周期
+    #delta-retention-timer-interval-in-ms: 30000 # 清理任务程序被唤醒的时间间隔，清理过期的增量信息，单位为毫秒，默认为30 * 1000
+    #retention-time-in-m-s-in-delta-queue: 180000 # 保持增量信息缓存的时间，从而保证不会丢失这些信息，单位为毫秒，默认为3 * 60 * 1000
+
+  instance:
+    instance-id: ${spring.application.name}@${spring.cloud.client.ip-address}@${server.port} # 执行当前服务的应用id，标识的是每一个具体的的服务(不可以重复)
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称  #加上这个解决警告：c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+    #lease-renewal-interval-in-seconds: 5 # 每隔5s发送一次心跳
+    #lease-expiration-duration-in-seconds: 15 # 告知服务端未xx秒内收到心跳，就将该服务移除列表，即xx秒未续约的服务实例, 参考server的缓存机制
+    #status-page-url-path: /actuator/info # 状态页面路径
+    #health-check-url-path: /actuator/health # 健康检查路径
+    hostname: @project.address@ #127.0.0.1
+
+  client:
+    enabled: true
+    healthcheck.enabled: true # 开启健康检查
+    registry-fetch-interval-seconds: 30 # eureka client间隔多久去拉取服务器注册信息,默认为30秒
+    register-with-eureka: true # 是否需要将自己注册给自己的注册中心（集群的时候是需要是为true）
+    fetch-registry: true # 是否检索注册中心的服务（单实例请设置为false，集群需要设置成true）
+    initial-instance-info-replication-interval-seconds: 40 # 将实例信息变更同步到 Eureka Server的初始延迟时间 ，默认为40秒
+    eureka-server-connect-timeout-seconds: 10 # 连接eureka server的超时时间，默认为5秒
+    eureka-server-read-timeout-seconds: 15 # 读取eureka server的超时时间，默认为8秒
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+
+  dashboard:
+    path: / #设置访问根路径

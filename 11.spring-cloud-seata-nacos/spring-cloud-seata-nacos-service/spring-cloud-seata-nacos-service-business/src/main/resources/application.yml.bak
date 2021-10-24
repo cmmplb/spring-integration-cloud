@@ -1,0 +1,90 @@
+server:
+  port: 10001
+  servlet:
+    context-path: /api/business
+spring:
+  #profiles:
+  #    include:
+  #        test,dev,seata   #引入其他的yml配置文件。注意，不能换行，include:多个用英文逗号分隔
+  application:
+    name: seata-service-business
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seata_nacos?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: cmmplb
+    druid:
+      initial-size: 20
+      max-active: 20
+      min-idle: 2
+      max-wait: 60000 #空闲等待超时
+      time-between-eviction-runs-millis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000  # 配置一个连接在池中最小生存的时间，单位是毫秒
+  main:
+    allow-bean-definition-overriding: true #后发现的bean会覆盖之前相同名称的bean
+
+  #seata 配置分布式事务组-seata 服务分组，要与服务端nacos-config.txt中service.vgroup_mapping的后缀对应-在1.4的seata版本中建议设置在seata.tx-service-group
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: seata_service_business_tx_group
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true #是否开启驼峰命名规则
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+feign:
+  hystrix:
+    enabled: true
+
+seata:
+  # 1.0新添加的enabled激活自动配置，使得我们可以在yaml/properties文件中配置，
+  # 避免了以前需要客户端引入2个文件：
+  # file.conf.bak 和 registry.conf.bak
+  # 1.0新特性，需要依赖seata-spring-boot-starter,默认为true
+  enabled: true
+  application-id: ${spring.application.name} # seata-service-business
+  tx-service-group: seata_service_business_tx_group    #此处配置自定义的seata事务分组名称 ${spring.application.name}-tx-group
+  enable-auto-data-source-proxy: true    #开启数据库代理
+  ##registry
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: ${spring.cloud.nacos.discovery.server-addr} # 127.0.0.1:8848
+      group: SERVICE_SEATA_GROUP
+      namespace: service_seata
+      username: nacos
+      password: nacos
+  ##config
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.discovery.server-addr} # 127.0.0.1:8848
+      namespace: service_seata
+      group: SERVICE_SEATA_GROUP
+      username: nacos
+      password: nacos
+  #service  -- 对应file里面的serivce
+  service:
+    vgroup-mapping:
+      seata_service_business_tx_group: default
+    grouplist:
+      business: 127.0.0.1:8091
+    disable-global-transaction: false
+  client:
+    rm:
+      report-success-enable: false
+
+
+
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-integration-cloud</artifactId>
+        <groupId>com.cmmplb</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-seata-nacos</artifactId>
+    <modules>
+        <module>spring-cloud-seata-nacos-api</module>
+        <module>spring-cloud-seata-nacos-common</module>
+        <module>spring-cloud-seata-nacos-common-db</module>
+        <module>spring-cloud-seata-nacos-nacos</module>
+        <module>spring-cloud-seata-nacos-service</module>
+    </modules>
+    <groupId>com.cmmplb.seata</groupId>
+    <packaging>pom</packaging>
+    <name>spring-cloud-seata-nacos-parent</name>
+    <description>spring-cloud-seata-nacos-parent</description>
+    <properties>
+        <seata-spring-boot-starter.version>1.4.2</seata-spring-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.4.3.1</mybatis-plus-boot-starter.version>
+        <druid-spring-boot-starter.version>1.2.5</druid-spring-boot-starter.version>
+        <mapper-spring-boot-starter.version>2.0.4</mapper-spring-boot-starter.version>
+        <nacos.version>1.4.1</nacos.version>
+    </properties>
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- common模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-nacos-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- common-db模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-nacos-common-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- business模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-nacos-api-business</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- user模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-nacos-api-user</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

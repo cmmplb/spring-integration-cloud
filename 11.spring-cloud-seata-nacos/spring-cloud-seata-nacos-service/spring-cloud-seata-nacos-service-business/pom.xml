@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-cloud-seata-nacos-service</artifactId>
+        <groupId>com.cmmplb.seata</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-seata-nacos-service-business</artifactId>
+    <packaging>jar</packaging>
+    <name>spring-cloud-seata-nacos-service-business</name>
+    <description>spring-cloud-seata-nacos-service-business</description>
+    <dependencies>
+        <!-- business模块 -->
+        <dependency>
+            <groupId>com.cmmplb.seata</groupId>
+            <artifactId>spring-cloud-seata-nacos-api-business</artifactId>
+        </dependency>
+        <!-- user模块 -->
+        <dependency>
+            <groupId>com.cmmplb.seata</groupId>
+            <artifactId>spring-cloud-seata-nacos-api-user</artifactId>
+        </dependency>
+    </dependencies>
+</project>

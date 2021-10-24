@@ -1,0 +1,29 @@
+
+修改config.txt中的数据库配置
+
+service.vgroup_mapping.my_test_tx_group=default     -- my_test_tx_group / seata客服端的事务组名称，多个写多行
+service.default.grouplist=127.0.0.1:8091            -- seata 服务端地址
+
+store.mode=file                                     -- db模式改成db   原file
+
+store.db.datasource=druid
+store.db.dbType=mysql
+store.db.driverClassName=com.mysql.jdbc.Driver
+store.db.url=jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true&rewriteBatchedStatements=true
+store.db.user=root
+store.db.password=cmmplb                            -- 数据库配置
+
+
+改完用git命令框执行 sh nacos-config.sh hostip
+
+nacos查看配置是否添加
+
+
+-- 旧版本配置
+
+service.vgroup_mapping.seata-service-business-group=default
+service.vgroup_mapping.seata-service-user-group=default
+
+-- 高版本配置
+service.vgroupMapping.seata-service-business-group=default
+service.vgroupMapping.seata-service-user-group=default

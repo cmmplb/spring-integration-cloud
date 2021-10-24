@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.cmmplb.security.oauth2.start.autoconfigure.ResourceServerConfig,\
+com.cmmplb.security.oauth2.start.autoconfigure.MethodSecurityConfig,\
+com.cmmplb.security.oauth2.start.point.ResourceAuthExceptionEntryPoint,\
+com.cmmplb.security.oauth2.start.handler.AccessDeniedHandler,\
+com.cmmplb.security.oauth2.start.service.impl.ClientDetailsServiceImpl

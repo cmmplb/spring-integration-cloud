@@ -1,0 +1,11 @@
+spring:
+  freemarker:
+    template-loader-path: classpath:/templates #设定ftl文件路径
+    cache: false #关闭缓存，及时刷新，上线生产环境需要修改为true
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl

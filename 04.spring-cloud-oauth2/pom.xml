@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-integration-cloud</artifactId>
+        <groupId>com.cmmplb</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-oauth2</artifactId>
+    <packaging>pom</packaging>
+    <name>spring-cloud-oauth2</name>
+    <description>spring-cloud-oauth2</description>
+    <modules>
+        <module>spring-cloud-oauth2-starter</module>
+        <module>spring-cloud-oauth2-auth</module>
+        <module>spring-cloud-oauth2-client</module>
+        <module>spring-cloud-oauth2-client-sso</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <!-- oauth2-start模块 -->
+            <dependency>
+                <groupId>com.cmmplb</groupId>
+                <artifactId>spring-cloud-oauth2-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

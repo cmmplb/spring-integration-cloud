@@ -1,0 +1,75 @@
+server.port=10001
+server.servlet.context-path=/api/business
+spring.application.name=seata-service-business
+
+#数据源
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/seata_nacos?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=cmmplb
+spring.datasource.druid.initial-size=20
+spring.datasource.druid.max-active=20
+spring.datasource.druid.min-idle=2
+spring.datasource.druid.max-wait=60000
+spring.datasource.druid.time-between-eviction-runs-millis=60000
+spring.datasource.druid.min-evictable-idle-time-millis=300000
+
+#后发现的bean会覆盖之前相同名称的bean
+spring.main.allow-bean-definition-overriding=true
+
+#mybatis-plus
+mybatis-plus.mapper-locations=classpath:mapper/*.xml
+mybatis-plus.global-config.db-config.id-type=auto
+mybatis-plus.global-config.db-config.table-underline=true
+mybatis-plus.configuration.map-underscore-to-camel-case=true
+mybatis-plus.configuration.call-setters-on-nulls=true
+mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+
+#feign
+feign.hystrix.enabled=false
+
+#nacos-discovery-在bootstrap里面设置了
+#spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+#spring.cloud.nacos.discovery.namespace=service_dev
+#spring.cloud.nacos.discovery.group=SERVICE_DEV_GROUP
+
+#nacos-config-在bootstrap里面设置了
+#spring.cloud.nacos.config.server-addr=${spring.cloud.nacos.discovery.server-addr}
+#spring.cloud.nacos.config.namespace=seata_nacos
+#spring.cloud.nacos.config.group=SERVICE_DEV_GROUP
+#spring.cloud.nacos.config.file-extension=yaml
+#spring.cloud.nacos.config.prefix=business
+#spring.cloud.nacos.config.refresh-enabled=true
+
+#seata 配置分布式事务组-seata 服务分组，要与服务端nacos-config.txt中service.vgroup_mapping的后缀对应-在1.4的seata版本中建议设置在seata.tx-service-group
+spring.cloud.alibaba.seata.tx-service-group=seata_service_business_tx_group
+# 1.0新添加的enabled激活自动配置，使得我们可以在yaml/properties文件中配置，
+# 避免了以前需要客户端引入2个文件：
+# file.conf.bak 和 registry.conf.bak
+# 1.0新特性，需要依赖seata-spring-boot-starter,默认为true
+seata.enabled=true
+#开启数据库代理
+seata.enable-auto-data-source-proxy=true
+#和下面service中的vgroup-mapping对应
+seata.tx-service-group=seata_service_business_tx_group
+##registry
+seata.registry.type=nacos
+seata.registry.nacos.application=seata-server
+seata.registry.nacos.server-addr=127.0.0.1:8848
+seata.registry.nacos.group=SERVICE_SEATA_GROUP
+seata.registry.nacos.namespace=service_seata
+seata.registry.nacos.cluster=default
+seata.registry.nacos.username=nacos
+seata.registry.nacos.password=nacos
+##config
+seata.config.type=nacos
+seata.config.nacos.server-addr=127.0.0.1:8848
+seata.config.nacos.namespace=service_seata
+seata.config.nacos.group=SERVICE_SEATA_GROUP
+seata.config.nacos.username=nacos
+seata.config.nacos.password=nacos
+#service  -- 对应file里面的serivce
+seata.service.vgroup-mapping.seata_service_business_tx_group=default
+seata.service.disable-global-transaction=false
+seata.client.rm.report-success-enable=false

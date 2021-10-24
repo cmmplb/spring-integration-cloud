@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-integration-cloud</artifactId>
+        <groupId>com.cmmplb</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-seata-eureka</artifactId>
+    <modules>
+        <module>spring-cloud-seata-eureka-api</module>
+        <module>spring-cloud-seata-eureka-common</module>
+        <module>spring-cloud-seata-eureka-common-db</module>
+        <module>spring-cloud-seata-eureka-eureka</module>
+        <module>spring-cloud-seata-eureka-service</module>
+    </modules>
+    <groupId>com.cmmplb.seata</groupId>
+    <packaging>pom</packaging>
+    <name>spring-cloud-seata-eureka-parent</name>
+    <description>spring-cloud-seata-eureka-parent</description>
+    <properties>
+        <druid-spring-boot-starter.version>1.2.5</druid-spring-boot-starter.version>
+        <mapper-spring-boot-starter.version>2.0.4</mapper-spring-boot-starter.version>
+        <spring-cloud-starter-alibaba-seata.version>2.1.0.RELEASE</spring-cloud-starter-alibaba-seata.version>
+    </properties>
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- common模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-eureka-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- common-db模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-eureka-common-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- business模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-eureka-api-business</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- user模块 -->
+            <dependency>
+                <groupId>com.cmmplb.seata</groupId>
+                <artifactId>spring-cloud-seata-eureka-api-user</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                <version>2.1.0.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

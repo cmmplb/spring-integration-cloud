@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-cloud-seata-eureka</artifactId>
+        <groupId>com.cmmplb.seata</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-cloud-seata-eureka-api</artifactId>
+    <packaging>pom</packaging>
+    <name>spring-cloud-seata-eureka-api</name>
+    <description>spring-cloud-seata-eureka-api</description>
+    <modules>
+        <module>spring-cloud-seata-eureka-api-business</module>
+        <module>spring-cloud-seata-eureka-api-user</module>
+    </modules>
+    <dependencies>
+        <!-- common -->
+        <dependency>
+            <groupId>com.cmmplb.seata</groupId>
+            <artifactId>spring-cloud-seata-eureka-common-db</artifactId>
+        </dependency>
+    </dependencies>
+</project>

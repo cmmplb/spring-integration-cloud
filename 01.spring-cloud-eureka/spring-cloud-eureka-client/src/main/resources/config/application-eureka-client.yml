@@ -1,0 +1,15 @@
+eureka:
+  instance:
+    instanceId: ${spring.application.name}@${spring.cloud.client.ip-address}@${server.port}  # 执行当前服务的应用id，标识的是每一个具体的的服务(不可以重复)
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    lease-renewal-interval-in-seconds: 5 # 每隔5s发送一次心跳
+    lease-expiration-duration-in-seconds: 30 # 告知服务端10秒还未收到心跳的话，就将该服务移除列表
+    #status-page-url-path: /actuator/info # 状态页面路径
+    #health-check-url-path: /actuator/health # 健康检查路径
+  client:
+    enabled: true
+    service-url.defaultZone: http://@project.address@:8080/eureka
+    healthcheck.enabled: false #true # 开启健康检查
+    register-with-eureka: true # 是否需要将自己注册给自己的注册中心-默认true
+    fetch-registry: true # 是否检索注册中心的服务-默认true
+    registry-fetch-interval-seconds: 5 # eureka client间隔多久去拉取服务器注册信息,默认为30秒

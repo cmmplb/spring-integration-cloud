@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: @project.name@
+server:
+  port: 8080
+  address: @project.address@
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    basedir: D:/Logs/tomcat/tmp
