@@ -22,7 +22,7 @@
         <!-- redis模块 -->
         <dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-integration-redis</artifactId>
+            <artifactId>spring-boot-starter-redis</artifactId>
         </dependency>
         <!-- freemarker -->
         <dependency>

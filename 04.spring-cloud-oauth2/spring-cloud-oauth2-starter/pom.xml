@@ -16,7 +16,7 @@
         <!-- web模块 -->
         <dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-integration-web</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- security-oauth2 -->
         <dependency>

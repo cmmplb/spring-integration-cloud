@@ -17,7 +17,7 @@
         <!-- core模块 -->
         <!--<dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-integration-core</artifactId>
+            <artifactId>spring-boot-starter-core</artifactId>
         </dependency>-->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

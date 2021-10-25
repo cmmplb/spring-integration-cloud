@@ -7,7 +7,7 @@
 
     <!-- 父工程 -->
     <parent>
-        <artifactId>spring-integration-parent</artifactId>
+        <artifactId>spring-parent</artifactId>
         <groupId>com.cmmplb</groupId>
         <version>1.0.0</version>
     </parent>
@@ -43,27 +43,28 @@
             <!-- core公共核心模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-integration-core</artifactId>
+                <artifactId>spring-boot-starter-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- web模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-integration-web</artifactId>
+                <artifactId>spring-boot-starter-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- redis模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-integration-redis</artifactId>
+                <artifactId>spring-boot-starter-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- knife4j模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-integration-knife4j</artifactId>
+                <artifactId>spring-boot-starter-knife4j</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- 单元测试代码覆盖率报告 -->
             <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
