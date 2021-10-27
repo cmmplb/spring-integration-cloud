@@ -40,7 +40,7 @@ public class SpringCloudNacosServerApplication {
     private static boolean initEnv() {
         System.setProperty("nacos.standalone", "true"); // The System property name of Standalone mode 单机
         System.setProperty("nacos.core.auth.enabled", "false"); // 是否开启认证
-        System.setProperty("server.tomcat.basedir", "logs"); // 日志目录
+        System.setProperty("server.tomcat.basedir", "D:/logs/nacos"); // 日志目录
         return true;
     }
 }
