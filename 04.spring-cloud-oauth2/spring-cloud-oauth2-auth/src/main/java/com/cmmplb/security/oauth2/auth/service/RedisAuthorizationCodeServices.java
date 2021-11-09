@@ -14,8 +14,6 @@ import org.springframework.security.oauth2.provider.code.RandomValueAuthorizatio
  * 仿照org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices内存存储模式
  * 授权码地址：http://localhost/api/spring-cloud-oauth2-auth/oauth/authorize?response_type=code&client_id=client&redirect_uri=http://localhost/api/spring-cloud-oauth2-auth&scope=all&state=hello
  * 在同时定义了认证服务器和资源服务器后，再去使用授权码模式获取令牌可能会遇到 Full authentication is required to access this resource 的问题，
- * 这时候只要确保认证服务器先于资源服务器配置即可，比如在认证服务器的配置类上使用@Order(1)标注，
- * 在资源服务器的配置类上使用@Order(2)标注。
  */
 
 @Slf4j

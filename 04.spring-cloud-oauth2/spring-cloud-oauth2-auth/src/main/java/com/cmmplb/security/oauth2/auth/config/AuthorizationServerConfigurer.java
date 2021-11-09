@@ -3,10 +3,10 @@ package com.cmmplb.security.oauth2.auth.config;
 import com.cmmplb.common.redis.service.RedisService;
 import com.cmmplb.core.utils.ObjectUtil;
 import com.cmmplb.security.oauth2.auth.exception.auth.GlobalWebResponseExceptionTranslator;
+import com.cmmplb.security.oauth2.auth.mobile.granter.MobileTokenGranter;
 import com.cmmplb.security.oauth2.auth.service.RedisAuthorizationCodeServices;
 import com.cmmplb.security.oauth2.auth.service.UserService;
 import com.cmmplb.security.oauth2.start.entity.AuthUser;
-import com.cmmplb.security.oauth2.auth.mobile.granter.MobileTokenGranter;
 import com.cmmplb.security.oauth2.start.service.impl.ClientDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,20 +24,15 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
-import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
-import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
-import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,12 +52,6 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private TokenStore redisTokenStore;
-
-    @Autowired
-    private TokenEnhancer tokenEnhancer;
 
     @Resource
     private RedisConnectionFactory redisConnectionFactory;
@@ -84,17 +73,13 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-
-                //配置grant_type模式，如果不配置则默认使用密码模式、简化模式、验证码模式以及刷新token模式，如果配置了只使用配置中，默认配置失效
-                //具体可以查询AuthorizationServerEndpointsConfigurer中的getDefaultTokenGranters方法
-                .tokenGranter(tokenGranter(endpoints))
-                .tokenStore(redisTokenStore) // 配置token存储，一般配置redis存储
-                .tokenEnhancer(tokenEnhancer)
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST) // 允许令牌的请求方式
+                .tokenGranter(tokenGranter(endpoints)) //配置grant_type模式
+                .tokenStore(redisTokenStore()) // 配置token存储，一般配置redis存储
+                .tokenEnhancer(tokenEnhancer()) // 拓展token信息
                 .userDetailsService(userService)// 配置用户详情server，密码模式必须
                 .authenticationManager(authenticationManager) // 配置认证管理器
-                // 配置授权码模式授权码服务,不配置默认为内存模式-->org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices
-                .authorizationCodeServices(authorizationCodeServices())
+                .authorizationCodeServices(authorizationCodeServices()) // 配置授权码模式授权码服务,不配置默认为内存模式-->org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices
                 .reuseRefreshTokens(false) // 重复使用reuseRefreshToken
                 .pathMapping("/oauth/confirm_access", "/oauth/confirm_access") // 替换地址
                 .exceptionTranslator(new GlobalWebResponseExceptionTranslator()); // 自定义异常处理
@@ -113,19 +98,18 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     /**
      * 创建grant_type列表
+     * 配置grant_type模式，如果不配置则默认使用密码模式、简化模式、验证码模式以及刷新token模式，如果配置了只使用配置中，默认配置失效
+     * 具体可以查询AuthorizationServerEndpointsConfigurer中的getDefaultTokenGranters方法
+     * org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer.getDefaultTokenGranters
      * @param endpoints 端点配置器
      * @return TokenGranter
      */
     private TokenGranter tokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
-        List<TokenGranter> list = new ArrayList<>();
-        //这里配置密码模式、刷新token模式、自定义手机号验证码模式、授权码模式、简化模式、客户端模式
-        list.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        list.add(new RefreshTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        list.add(new MobileTokenGranter(authenticationManager, endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        list.add(new AuthorizationCodeTokenGranter(endpoints.getTokenServices(), endpoints.getAuthorizationCodeServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        list.add(new ImplicitTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        list.add(new ClientCredentialsTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
-        return new CompositeTokenGranter(list);
+        TokenGranter tokenGranter = endpoints.getTokenGranter();
+        ArrayList<TokenGranter> tokenGranters = new ArrayList<>(Collections.singletonList(tokenGranter));
+        // 添加一个自定义手机号验证码模式
+        tokenGranters.add(new MobileTokenGranter(authenticationManager, endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
+        return new CompositeTokenGranter(tokenGranters);
     }
 
     /**
