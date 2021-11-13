@@ -2,25 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 指定当前POM模型的版本 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 父工程 -->
     <parent>
         <artifactId>spring-integration-cloud</artifactId>
         <groupId>com.cmmplb</groupId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <!-- 项目的唯一的标识符，实际对应项目的名称，就是项目根目录的名称。 -->
     <artifactId>spring-cloud-seata-nacos</artifactId>
-    <modules>
-        <module>spring-cloud-seata-nacos-api</module>
-        <module>spring-cloud-seata-nacos-common</module>
-        <module>spring-cloud-seata-nacos-common-db</module>
-        <module>spring-cloud-seata-nacos-nacos</module>
-        <module>spring-cloud-seata-nacos-service</module>
-    </modules>
+    <!-- 项目ID，项目坐标核心元素，项目组织唯一的标识符，实际对应JAVA的包的结构，是main目录里java的目录结构。 -->
     <groupId>com.cmmplb.seata</groupId>
+    <!-- 项目的打包类型：pom、jar、war -->
     <packaging>pom</packaging>
-    <name>spring-cloud-seata-nacos-parent</name>
+    <!-- 项目名称 -->
+    <name>${project.artifactId}</name>
+    <!-- 描述信息 -->
     <description>spring-cloud-seata-nacos-parent</description>
+
+    <!-- 版本依赖定义 -->
     <properties>
         <seata-spring-boot-starter.version>1.4.2</seata-spring-boot-starter.version>
         <mybatis-plus-boot-starter.version>3.4.3.1</mybatis-plus-boot-starter.version>
@@ -28,6 +31,16 @@
         <mapper-spring-boot-starter.version>2.0.4</mapper-spring-boot-starter.version>
         <nacos.version>1.4.1</nacos.version>
     </properties>
+
+    <!-- 子模块 -->
+    <modules>
+        <module>spring-cloud-seata-nacos-api</module>
+        <module>spring-cloud-seata-nacos-common</module>
+        <module>spring-cloud-seata-nacos-common-db</module>
+        <module>spring-cloud-seata-nacos-nacos</module>
+        <module>spring-cloud-seata-nacos-service</module>
+    </modules>
+
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
