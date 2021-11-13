@@ -3,7 +3,7 @@ package com.cmmplb.security.oauth2.auth.exception.auth;
 import com.cmmplb.core.result.HttpCodeEnum;
 import com.cmmplb.core.result.Result;
 import com.cmmplb.core.result.ResultUtil;
-import com.cmmplb.core.utils.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -33,7 +33,7 @@ public class Oauth2StdSerializer extends StdSerializer<OAuth2Exception> {
     public void serialize(OAuth2Exception e, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) {
         Result<String> fail = ResultUtil.fail();
         fail.setCode(e.getHttpErrorCode());
-        if (StringUtils.equals(e.getMessage(), BAD_CREDENTIALS)) {
+        if (StringUtil.equals(e.getMessage(), BAD_CREDENTIALS)) {
             fail.setMsg(HttpCodeEnum.BAD_CREDENTIALS.getMessage());
         } else {
             log.warn("oauth2认证异常:", e);

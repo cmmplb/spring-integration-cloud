@@ -24,7 +24,7 @@ import com.alibaba.nacos.config.server.service.repository.PersistService;
 import com.alibaba.nacos.model.Namespace;
 import com.alibaba.nacos.model.NamespaceAllInfo;
 import com.alibaba.nacos.security.nacos.NacosAuthConfig;
-import org.apache.commons.lang3.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,7 +87,7 @@ public class NamespaceController {
 	public NamespaceAllInfo getNamespace(HttpServletRequest request, HttpServletResponse response,
                                          @RequestParam("namespaceId") String namespaceId) {
 		// TODO 获取用kp
-		if (StringUtils.isBlank(namespaceId)) {
+		if (StringUtil.isBlank(namespaceId)) {
 			return new NamespaceAllInfo(namespaceId, "Public", 200, persistService.configInfoCount(""), 0,
 					"Public Namespace");
 		}
@@ -113,7 +113,7 @@ public class NamespaceController {
                                    @RequestParam("customNamespaceId") String namespaceId, @RequestParam("namespaceName") String namespaceName,
                                    @RequestParam(value = "namespaceDesc", required = false) String namespaceDesc) {
 		// TODO 获取用kp
-		if (StringUtils.isBlank(namespaceId)) {
+		if (StringUtil.isBlank(namespaceId)) {
 			namespaceId = UUID.randomUUID().toString();
 		}
 		else {
@@ -140,7 +140,7 @@ public class NamespaceController {
 	 */
 	@GetMapping(params = "checkNamespaceIdExist=true")
 	public Boolean checkNamespaceIdExist(@RequestParam("customNamespaceId") String namespaceId) {
-		if (StringUtils.isBlank(namespaceId)) {
+		if (StringUtil.isBlank(namespaceId)) {
 			return false;
 		}
 		return (persistService.tenantInfoCountByTenantId(namespaceId) > 0);

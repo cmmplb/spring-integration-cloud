@@ -26,8 +26,8 @@ import com.alibaba.nacos.config.server.utils.RequestUtil;
 import com.alibaba.nacos.core.utils.Loggers;
 import com.alibaba.nacos.security.nacos.roles.NacosRoleServiceImpl;
 import com.alibaba.nacos.security.nacos.users.NacosUser;
+import com.cmmplb.core.utils.StringUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,7 +63,7 @@ public class NacosAuthManager implements AuthManager {
 	public User login(Object request) throws AccessException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String token = resolveToken(req);
-		if (StringUtils.isBlank(token)) {
+		if (StringUtil.isBlank(token)) {
 			throw new AccessException("user not found!");
 		}
 
@@ -98,6 +98,11 @@ public class NacosAuthManager implements AuthManager {
 	}
 
 	@Override
+	public User loginRemote(Object o) throws AccessException {
+		return null;
+	}
+
+	@Override
 	public void auth(Permission permission, User user) throws AccessException {
 		if (Loggers.AUTH.isDebugEnabled()) {
 			Loggers.AUTH.debug("auth permission: {}, user: {}", permission, user);
@@ -113,11 +118,11 @@ public class NacosAuthManager implements AuthManager {
 	 */
 	private String resolveToken(HttpServletRequest request) throws AccessException {
 		String bearerToken = request.getHeader(NacosAuthConfig.AUTHORIZATION_HEADER);
-		if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+		if (StringUtil.isNotBlank(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
 			return bearerToken.substring(7);
 		}
 		bearerToken = request.getParameter(Constants.ACCESS_TOKEN);
-		if (StringUtils.isBlank(bearerToken)) {
+		if (StringUtil.isBlank(bearerToken)) {
 			String userName = request.getParameter("username");
 			String password = request.getParameter("password");
 			bearerToken = resolveTokenFromUser(userName, password);

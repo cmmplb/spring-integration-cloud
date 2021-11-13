@@ -1,10 +1,10 @@
 package com.cmmplb.security.oauth2.auth.utils;
 
 import com.cmmplb.common.redis.service.RedisService;
+import com.cmmplb.core.utils.SpringUtil;
 import com.cmmplb.security.oauth2.start.constants.Oauth2Constants;
 import com.cmmplb.core.constants.RedisConstants;
 import com.cmmplb.core.utils.RandomUtil;
-import com.cmmplb.web.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -77,6 +77,6 @@ public class SmsCodeUtil {
      * @return RedisService
      */
     public static RedisService getRedisService() {
-        return SpringUtils.getBean(RedisService.class);
+        return SpringUtil.getBean(RedisService.class);
     }
 }

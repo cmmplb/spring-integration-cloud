@@ -2,8 +2,8 @@ package com.cmmplb.security.oauth2.auth.controller;
 
 import com.cmmplb.core.result.Result;
 import com.cmmplb.core.result.ResultUtil;
-import com.cmmplb.core.utils.StringUtils;
-import com.cmmplb.web.utils.SpringUtils;
+import com.cmmplb.core.utils.SpringUtil;
+import com.cmmplb.core.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,13 +42,13 @@ public class TokenController {
      */
     @GetMapping("/logout")
     public Result<?> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
-        if (StringUtils.isEmpty(authHeader)) {
+        if (StringUtil.isEmpty(authHeader)) {
             return ResultUtil.success();
         }
 
-        String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StringUtils.EMPTY).trim();
+        String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StringUtil.EMPTY).trim();
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
-        if (accessToken == null || StringUtils.isEmpty(accessToken.getValue())) {
+        if (accessToken == null || StringUtil.isEmpty(accessToken.getValue())) {
             return ResultUtil.success();
         }
 
@@ -66,7 +66,7 @@ public class TokenController {
         log.info("map:{}", map);
 
         // 处理自定义退出事件，保存相关日志
-        SpringUtils.publishEvent(new LogoutSuccessEvent(auth2Authentication));
+        SpringUtil.publishEvent(new LogoutSuccessEvent(auth2Authentication));
         return ResultUtil.success();
     }
 }

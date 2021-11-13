@@ -1,6 +1,6 @@
 package com.cmmplb.apollo.client.config;
 
-import com.cmmplb.core.utils.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
@@ -48,7 +48,7 @@ public class LoggerConfig {
         // 把日志级别设置error,那么在项目启动的时候,因为PostConstruct注解的原因，所以会去执行一次refreshLoggingLevels方法，把当前日志级别改成error。
         Set<String> keyNames = config.getPropertyNames();
         for (String key : keyNames) {
-            if (StringUtils.containsIgnoreCase(key, LOGGER_TAG)) {
+            if (StringUtil.containsIgnoreCase(key, LOGGER_TAG)) {
                 String strLevel = config.getProperty(key, "info");
                 LogLevel level = LogLevel.valueOf(strLevel.toUpperCase());
                 loggingSystem.setLogLevel(key.replace(LOGGER_TAG, ""), level);

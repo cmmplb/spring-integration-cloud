@@ -24,10 +24,10 @@
     <!-- 依赖 -->
     <dependencies>
         <!-- core模块 -->
-        <!--<dependency>
+        <dependency>
             <groupId>com.cmmplb</groupId>
             <artifactId>spring-boot-starter-core</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>

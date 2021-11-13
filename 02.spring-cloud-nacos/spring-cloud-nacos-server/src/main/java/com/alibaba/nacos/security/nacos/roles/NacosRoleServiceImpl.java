@@ -26,7 +26,7 @@ import com.alibaba.nacos.config.server.model.Page;
 import com.alibaba.nacos.core.utils.Loggers;
 import com.alibaba.nacos.security.nacos.NacosAuthConfig;
 import com.alibaba.nacos.security.nacos.users.NacosUserDetailsServiceImpl;
-import org.apache.commons.lang3.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import org.apache.mina.util.ConcurrentHashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -69,7 +69,7 @@ public class NacosRoleServiceImpl {
 	@Scheduled(initialDelay = 5000, fixedDelay = 15000)
 	private void reload() {
 		try {
-			Page<RoleInfo> roleInfoPage = rolePersistService.getRolesByUserName(StringUtils.EMPTY, 1,
+			Page<RoleInfo> roleInfoPage = rolePersistService.getRolesByUserName(StringUtil.EMPTY, 1,
 					Integer.MAX_VALUE);
 			if (roleInfoPage == null) {
 				return;

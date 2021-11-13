@@ -21,7 +21,7 @@ import com.alibaba.nacos.auth.common.ActionTypes;
 import com.alibaba.nacos.common.model.RestResult;
 import com.alibaba.nacos.security.nacos.NacosAuthConfig;
 import com.alibaba.nacos.security.nacos.roles.NacosRoleServiceImpl;
-import org.apache.commons.lang3.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,8 +91,8 @@ public class RoleController {
 	@DeleteMapping
 	@Secured(resource = NacosAuthConfig.CONSOLE_RESOURCE_NAME_PREFIX + "roles", action = ActionTypes.WRITE)
 	public Object deleteRole(@RequestParam String role,
-			@RequestParam(name = "username", defaultValue = StringUtils.EMPTY) String username) {
-		if (StringUtils.isBlank(username)) {
+			@RequestParam(name = "username", defaultValue = StringUtil.EMPTY) String username) {
+		if (StringUtil.isBlank(username)) {
 			roleService.deleteRole(role);
 		}
 		else {

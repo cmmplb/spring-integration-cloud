@@ -20,7 +20,7 @@ import com.alibaba.nacos.auth.common.AuthConfigs;
 import com.alibaba.nacos.auth.common.AuthSystemTypes;
 import com.alibaba.nacos.filter.JwtAuthenticationTokenFilter;
 import com.alibaba.nacos.security.nacos.users.NacosUserDetailsServiceImpl;
-import org.apache.commons.lang3.StringUtils;
+import com.cmmplb.core.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -84,10 +84,10 @@ public class NacosAuthConfig extends WebSecurityConfigurerAdapter {
 		if (AuthSystemTypes.NACOS.name().equalsIgnoreCase(authConfigs.getNacosAuthSystemType())) {
 			ignoreUrls = "/**";
 		}
-		if (StringUtils.isBlank(authConfigs.getNacosAuthSystemType())) {
+		if (StringUtil.isBlank(authConfigs.getNacosAuthSystemType())) {
 			ignoreUrls = env.getProperty("nacos.security.ignore.urls", "/**");
 		}
-		if (StringUtils.isNotBlank(ignoreUrls)) {
+		if (StringUtil.isNotBlank(ignoreUrls)) {
 			for (String each : ignoreUrls.trim().split(SECURITY_IGNORE_URLS_SPILT_CHAR)) {
 				web.ignoring().antMatchers(each.trim());
 			}
@@ -102,7 +102,7 @@ public class NacosAuthConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		if (StringUtils.isBlank(authConfigs.getNacosAuthSystemType())) {
+		if (StringUtil.isBlank(authConfigs.getNacosAuthSystemType())) {
 			http
 
 					.csrf().disable().cors() // We don't need CSRF for JWT based
