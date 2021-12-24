@@ -1,8 +1,8 @@
 spring:
   application.name: @project.name@
-  profiles.include: eureka-server, loadbalancer, security, logging, management
+  profiles.include: eureka-client, loadbalancer, logging, management
 server:
-  port: 8080
+  port: 82
   address: @project.address@
   #servlet.context-path: /api/@project.artifactId@
   compression.enabled: true

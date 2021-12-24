@@ -24,8 +24,28 @@
     <!-- 子模块 -->
     <modules>
         <module>spring-cloud-eureka-server</module>
-        <module>spring-cloud-eureka-client</module>
+        <module>spring-cloud-eureka-service</module>
+        <module>spring-cloud-eureka-service-api</module>
     </modules>
 
-
+    <!-- 依赖 -->
+    <dependencies>
+        <!-- core模块 -->
+        <dependency>
+            <groupId>com.cmmplb</groupId>
+            <artifactId>spring-boot-starter-core</artifactId>
+        </dependency>
+        <!-- caffeine -->
+        <!--<dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            &lt;!&ndash;<version>${caffeine.version}</version>&ndash;&gt;
+            <version>3.0.1</version>
+        </dependency>-->
+        <!-- 健康检查 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 </project>

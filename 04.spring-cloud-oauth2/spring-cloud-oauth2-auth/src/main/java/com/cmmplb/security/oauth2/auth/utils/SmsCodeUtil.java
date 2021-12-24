@@ -1,10 +1,9 @@
 package com.cmmplb.security.oauth2.auth.utils;
 
 import com.cmmplb.common.redis.service.RedisService;
+import com.cmmplb.core.utils.RandomUtil;
 import com.cmmplb.core.utils.SpringUtil;
 import com.cmmplb.security.oauth2.start.constants.Oauth2Constants;
-import com.cmmplb.core.constants.RedisConstants;
-import com.cmmplb.core.utils.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,7 +36,7 @@ public class SmsCodeUtil {
     /**
      * 校验验证码
      * @param mobile 手机号
-     * @param code 验证码
+     * @param code   验证码
      * @return boolean
      */
     public static boolean validate(String mobile, String code) {
@@ -45,7 +44,7 @@ public class SmsCodeUtil {
     }
 
     private static void setCache(String mobile, String value) {
-        getRedisService().set(getCaptchaKey(mobile), value, RedisConstants.CAPTCHA_EXPIRE_SECONDS); // 5分钟
+        getRedisService().set(getCaptchaKey(mobile), value, 60 * 5); // 5分钟
     }
 
     /**

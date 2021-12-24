@@ -1,13 +1,11 @@
 spring:
-  profiles:
-    active: dev
-  application:
-    name: @project.name@
+  application.name: @project.name@
+  profiles.include: eureka-server, loadbalancer, security, logging, management
 server:
   port: 8081
   address: @project.address@
-  servlet:
-    context-path: /
+  #servlet.context-path: /api/@project.artifactId@
+  compression.enabled: true
   tomcat:
     uri-encoding: UTF-8
     basedir: D:/Logs/tomcat/tmp

@@ -1,5 +1,6 @@
 package com.cmmplb.eureka.server.one;
 
+import com.cmmplb.core.utils.SpringApplicationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,21 +17,11 @@ import java.net.UnknownHostException;
  * @since jdk 1.8
  */
 
-@Slf4j
-@SpringBootApplication
 @EnableEurekaServer
+@SpringBootApplication
 public class SpringCloudEurekaServerOneApplication {
 
-    public static void main(String[] args) throws UnknownHostException {
-        ApplicationContext application = SpringApplication.run(SpringCloudEurekaServerOneApplication.class, args);
-        Environment env = application.getEnvironment();
-        String port = env.getProperty("server.port");
-        log.info("\n----------------------------------------------------------\n\t" +
-                        "Application is running! Access URLs:\n\t" +
-                        "Local: \t\thttp://localhost:{}\n\t" +
-                        "External: \thttp://{}:{}\n\t" +
-                        "----------------------------------------------------------",
-                port, // Local
-                InetAddress.getLocalHost().getHostAddress(), port); // External
+    public static void main(String[] args) {
+        SpringApplicationUtil.run(SpringCloudEurekaServerOneApplication.class, args);
     }
 }
