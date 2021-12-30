@@ -14,6 +14,8 @@ store.db.user=root
 store.db.password=cmmplb                            -- 数据库配置
 
 
+config.txt放到根目录
+sh脚本放到conf
 改完用git命令框执行 sh nacos-config.sh hostip
 
 nacos查看配置是否添加
