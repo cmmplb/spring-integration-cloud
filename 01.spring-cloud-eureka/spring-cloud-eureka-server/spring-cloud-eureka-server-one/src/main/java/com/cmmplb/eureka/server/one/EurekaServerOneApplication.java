@@ -1,7 +1,8 @@
-package com.cmmplb.eureka.provider;
+package com.cmmplb.eureka.server.one;
 
 import com.cmmplb.core.utils.SpringApplicationUtil;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * @author penglibo
@@ -9,11 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since jdk 1.8
  */
 
+@EnableEurekaServer
 @SpringBootApplication
-public class SpringCloudEurekaClientApplication {
+public class EurekaServerOneApplication {
 
     public static void main(String[] args) {
-        SpringApplicationUtil.run(SpringCloudEurekaClientApplication.class, args);
+        SpringApplicationUtil.run(EurekaServerOneApplication.class, args);
     }
-
 }

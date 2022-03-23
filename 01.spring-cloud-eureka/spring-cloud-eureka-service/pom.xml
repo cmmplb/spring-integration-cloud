@@ -28,20 +28,25 @@
 
     <!-- 依赖 -->
     <dependencies>
-        <dependency>
-            <groupId>com.cmmplb</groupId>
-            <artifactId>spring-cloud-eureka-provider-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <!-- web模块 -->
         <dependency>
             <groupId>com.cmmplb</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- 健康检查 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- eureka-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!-- caffeine -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
     </dependencies>
 </project>

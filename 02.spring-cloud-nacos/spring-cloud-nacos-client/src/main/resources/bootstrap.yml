@@ -1,28 +1,58 @@
-spring:
-  profiles:
-    active: dev
-    #springboot2.4+分组配置
-    group:
-      - dev
-      - local
-  main:
-    #重复bean
-    allow-bean-definition-overriding: true
+# 服务端口
+server.port: @project.port@
+# 路径
+server.servlet.context-path: /
+# 关闭banner
+spring.main.banner-mode: off
+# 应用程序名称
+spring.application.name: @project.artifactId@
+# 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
+spring.main.allow-bean-definition-overriding: true
+# Spring Boot 2.6.0+设置允许循环依赖
+# spring.main.allow-circular-references: true
+# 激活配置
+spring.profiles.active: @profiles.active@
+# spring2.4+分组配置
+spring.profiles.group:
+  local:
+    - nacos
+    - tomcat
+  prod:
+    - prod
+# =====================================================================================
+#===============================local===============================
 ---
-spring:
-  config:
-    activate:
-      on-profile: dev
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        group: public
-        namespace: public
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        namespace: public
-        group: public
-        prefix: client
-        file-extension: yml
-        refresh-enabled: true #开启动态刷新
+spring.config.activate.on-profile: local
+# 本地服务注册
+spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+spring.cloud.nacos.discovery.group: DEFAULT_GROUP # 默认值DEFAULT_GROUP
+spring.cloud.nacos.discovery.namespace: public # 默认值DEFAULT_GROUP
+# 关闭配置拉取
+spring.cloud.nacos.config.enabled: false
+
+#===============================prod=================================
+---
+spring.config.activate.on-profile: prod
+# 指定ip地址，docker网络注册实例时使用了内网ip，如果要指定外网访问的话就配置或者nginx代理
+# spring.cloud.nacos.discovery.ip: @prod.nacos.ip@
+# spring.cloud.nacos.discovery.port: ${server.port}
+# 服务注册
+spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+spring.cloud.nacos.discovery.group: DEFAULT_GROUP
+spring.cloud.nacos.discovery.namespace: public
+# 配置获取
+spring.cloud.nacos.config.server-addr: ${spring.cloud.nacos.discovery.server-addr}
+spring.cloud.nacos.config.namespace: public
+spring.cloud.nacos.config.group: DEFAULT_GROUP
+spring.cloud.nacos.config.prefix: spring-cloud-nacos-client
+# 配置文件后缀
+spring.cloud.nacos.config.file-extension: yaml
+# 支持引用的配置动态刷新-> @Value("") ，nacos修改值后不用重启服务动态刷新，需要在引用配置的类名加上 @RefreshScope //配置热更新
+spring.cloud.nacos.config.refresh-enabled: true
+# =============================================================================
+# 支持多个共享 Data Id 的配置，优先级小于extension-configs, 自定义Data Id配置，
+# 属性是个集合，内部由 Config POJO组成。Config有3个属性，分别是dataId,group以及 refresh
+# =============================================================================
+spring.cloud.nacos.config.shared-configs:
+  - application.${spring.cloud.nacos.config.file-extension}
+#===============================more...=================================

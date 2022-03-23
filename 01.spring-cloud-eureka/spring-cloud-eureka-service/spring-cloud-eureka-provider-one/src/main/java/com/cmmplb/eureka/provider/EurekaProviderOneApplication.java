@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class SpringCloudEurekaProviderOneApplication {
+public class EurekaProviderOneApplication {
 
     public static void main(String[] args) {
-        SpringApplicationUtil.run(SpringCloudEurekaProviderOneApplication.class, args);
+        SpringApplicationUtil.run(EurekaProviderOneApplication.class, args);
     }
 
 }

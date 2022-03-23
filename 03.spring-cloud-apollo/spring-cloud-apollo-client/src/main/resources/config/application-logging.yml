@@ -1,0 +1,4 @@
+#在将该项目 com.cmmplb目录下的日志，都采用info模式输出
+logging:
+  level:
+    com.cmmplb: info

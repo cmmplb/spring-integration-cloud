@@ -27,6 +27,16 @@
 
     <!-- 依赖 -->
     <dependencies>
+        <!-- core模块 -->
+        <dependency>
+            <groupId>com.cmmplb</groupId>
+            <artifactId>spring-boot-starter-core</artifactId>
+        </dependency>
+        <!-- 健康检查 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- eureka-server依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

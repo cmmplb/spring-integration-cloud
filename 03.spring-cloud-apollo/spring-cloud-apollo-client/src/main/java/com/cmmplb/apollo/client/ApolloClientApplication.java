@@ -1,17 +1,14 @@
-package com.cmmplb.nacos.client;
+package com.cmmplb.apollo.client;
 
 import com.cmmplb.core.utils.SpringApplicationUtil;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * @author penglibo
@@ -19,11 +16,12 @@ import java.net.UnknownHostException;
  * @since jdk 1.8
  */
 
+@EnableApolloConfig // 默认读取的是application.properties 与yml读取冲突后读取了properties
 @SpringBootApplication
-public class SpringCloudNacosClientApplication {
+// @EnableDiscoveryClient // Dalston.SR4版本之前主函数上需要添加对应的注解；而Edgware.RELEASE之后的版本可以不添加
+public class ApolloClientApplication {
 
     public static void main(String[] args) {
-        SpringApplicationUtil.run(SpringCloudNacosClientApplication.class, args);
+        SpringApplicationUtil.run(ApolloClientApplication.class, args);
     }
-
 }

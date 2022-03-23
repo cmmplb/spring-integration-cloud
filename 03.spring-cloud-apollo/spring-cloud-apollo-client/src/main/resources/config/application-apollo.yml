@@ -1,0 +1,19 @@
+apollo:
+  # 自定义本地配置文件缓存路径
+  cache-dir: ./config
+  # demo.sh中8080启动的eureka
+  meta: http://localhost:8080
+  bootstrap:
+    # 设置在应用启动阶段就加载 Apollo 配置
+    enabled: true
+    eagerLoad:
+      # 将Apollo配置加载提到初始化日志系统之前。
+      enabled: true
+app:
+  # 应用全局唯一的身份标识
+  id: spring-cloud-apollo-client
+
+# 注入 application namespace
+#apollo.bootstrap.namespaces = client
+#apollo.cluster = platform-tw
+

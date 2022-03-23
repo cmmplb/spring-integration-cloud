@@ -24,7 +24,7 @@ eureka:
     # 集群配置
     # service-url.defaultZone: http://${server.address}:8080/eureka, http://${server.address}:8081/eureka
     # 集群密码配置
-    service-url.defaultZone: http://admin:cmmplb@${server.address}:8080/eureka, http://admin:cmmplb@${server.address}:8081/eureka
+    service-url.defaultZone: http://admin:cmmplb@localhost:8080/eureka, http://admin:cmmplb@localhost:8081/eureka
     # 开启健康检查， 依赖于 spring-boot-starter-actuator
     healthcheck.enabled: false
     # 是否需要将自己注册给自己的注册中心-默认true

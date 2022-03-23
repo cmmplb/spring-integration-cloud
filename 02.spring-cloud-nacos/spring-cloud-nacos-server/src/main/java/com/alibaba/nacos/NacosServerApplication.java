@@ -26,11 +26,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class SpringCloudNacosServerApplication {
+public class NacosServerApplication {
 
     public static void main(String[] args) {
         if (initEnv()) {
-            SpringApplication.run(SpringCloudNacosServerApplication.class, args);
+            SpringApplication.run(NacosServerApplication.class, args);
         }
     }
 

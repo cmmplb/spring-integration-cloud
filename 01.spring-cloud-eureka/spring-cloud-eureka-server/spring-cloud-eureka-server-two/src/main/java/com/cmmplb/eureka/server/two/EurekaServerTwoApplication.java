@@ -1,15 +1,8 @@
 package com.cmmplb.eureka.server.two;
 
 import com.cmmplb.core.utils.SpringApplicationUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * @author penglibo
@@ -19,9 +12,9 @@ import java.net.UnknownHostException;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class SpringCloudEurekaServerTwoApplication {
+public class EurekaServerTwoApplication {
 
     public static void main(String[] args) {
-        SpringApplicationUtil.run(SpringCloudEurekaServerTwoApplication.class, args);
+        SpringApplicationUtil.run(EurekaServerTwoApplication.class, args);
     }
 }

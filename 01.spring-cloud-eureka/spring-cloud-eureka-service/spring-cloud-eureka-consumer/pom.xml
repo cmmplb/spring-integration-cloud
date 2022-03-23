@@ -19,4 +19,12 @@
     <!-- 描述信息 -->
     <description>spring-cloud-eureka-consumer</description>
 
+    <!-- 依赖 -->
+    <dependencies>
+        <!-- spring-cloud-eureka-provider-api -->
+        <dependency>
+            <groupId>com.cmmplb</groupId>
+            <artifactId>spring-cloud-eureka-provider-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>
