@@ -1,0 +1,6 @@
+# 负载均衡器缓存
+spring:
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: false

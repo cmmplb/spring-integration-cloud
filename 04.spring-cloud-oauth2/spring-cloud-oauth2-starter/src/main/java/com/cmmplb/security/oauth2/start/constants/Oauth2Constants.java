@@ -49,6 +49,9 @@ public interface Oauth2Constants {
      */
     String CLIENT_DETAILS_KEY = "oauth2:client:details";
 
+
+    String OAUTH_TOKEN_STORE = "oauth:token:store:";
+
     /**
      * 验证码登录code前缀
      */

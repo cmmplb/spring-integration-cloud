@@ -1,13 +1,63 @@
-spring:
-  redis:
-    database: 3
-    host: 127.0.0.1
+redis:
+  # cluster type (standalone, sentinel, cluster)
+  cluster-type: sentinel
+  # pool type (jedis, lettuce, redisson(目前不支持))
+  # spring boot 2.0以上版本默认连接池是lettuce (基于Netty)
+  # spring boot 1.5以上版本默认采用的连接池是jedis
+  pool-type: lettuce
+  # 连接超时 (单位: 毫秒)
+  timeout: 30000
+  # 建立连接时是否使用SSL
+  ssl: false
+
+  # 单机
+  standalone:
+    # 数据库索引
+    database: 0
+    # redis主机地址
+    host: 193.112.252.232
+    # redis主机端口
     port: 6379
-    timeout: 10000
-    password: 123456
-    jedis:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
-        max-wait: 1000
+    # 用户名
+    username: cmmplb
+    # redis主机密码
+    password: cmmplb
+
+  # 哨兵
+  sentinel:
+    # 哨兵监听的RedisServer的名称
+    master: mymaster
+    # 哨兵的配置列表
+    nodes: 193.112.252.232:26379,193.112.252.232:26380,193.112.252.232:26381
+    # 密码
+    password: cmmplb
+    # 数据库索引
+    database: 0
+
+  # 集群
+  cluster:
+    #redis主机地址
+    nodes: 193.112.252.232:6371,193.112.252.232:6372,193.112.252.232:6373,193.112.252.232:6374,193.112.252.232:6375,193.112.252.232:6376
+    # redis主机密码
+    password: cmmplb
+    # 跨集群执行命令时要遵循的最大重定向数量
+    max-redirects: 5
+
+  # 连接池
+  pool:
+    # 连接池最大阻塞等待时间 (单位: 毫秒, 使用负值为无限制)
+    max-wait: -1
+    # pool可以分配的最大连接数 (使用负值为无限制)
+    max-active: 8
+    # pool中空闲连接的最大数量 (使用负值为无限制)
+    max-idle: 8
+    # pool中空闲连接的最小数量 (使用负值为无效配置)
+    min-idle: 1
+    # 从pool中获取连接时, 是否校验连接有效性(影响性能，生产环境不建议开启)
+    test-on-borrow: false
+    # 返还到pool中连接时, 是否校验连接有效性(影响性能，生产环境不建议开启)
+    test-on-return: false
+    # pool中定时进行连接有效性扫描, 无效连接将被释放
+    test-while-idle: true
+    # pool中定时进行连接有效性扫描时间间隔(单位: 毫秒, 使用负值为不启用扫描)
+    time-between-eviction-runs-millis: 30000

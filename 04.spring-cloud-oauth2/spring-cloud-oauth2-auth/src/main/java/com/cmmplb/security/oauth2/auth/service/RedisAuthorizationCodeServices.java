@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.auth.service;
 
-import com.cmmplb.common.redis.service.RedisService;
+import com.cmmplb.redis.service.RedisService;
 import com.cmmplb.security.oauth2.start.constants.Oauth2Constants;
 import com.cmmplb.core.utils.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;

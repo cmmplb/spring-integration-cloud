@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xuuuml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -34,40 +34,4 @@
         <module>10.spring-cloud-seata-eureka</module>
         <module>11.spring-cloud-seata-nacos</module>
     </modules>
-
-    <!-- 依赖声明 -->
-    <dependencyManagement>
-        <dependencies>
-            <!-- core公共核心模块 -->
-            <dependency>
-                <groupId>com.cmmplb</groupId>
-                <artifactId>spring-boot-starter-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- web模块 -->
-            <dependency>
-                <groupId>com.cmmplb</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- redis模块 -->
-            <dependency>
-                <groupId>com.cmmplb</groupId>
-                <artifactId>spring-boot-starter-redis</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- knife4j模块 -->
-            <dependency>
-                <groupId>com.cmmplb</groupId>
-                <artifactId>spring-boot-starter-knife4j</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <!-- 单元测试代码覆盖率报告 -->
-            <dependency>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco-maven-plugin.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

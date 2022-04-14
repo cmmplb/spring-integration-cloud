@@ -1,9 +1,9 @@
 package com.cmmplb.security.oauth2.auth.provider;
 
-import com.cmmplb.common.redis.service.RedisService;
+import com.cmmplb.redis.service.RedisService;
 import com.cmmplb.security.oauth2.start.constants.Oauth2Constants;
 import com.cmmplb.security.oauth2.auth.mobile.MobileCodeException;
-import com.cmmplb.security.oauth2.auth.service.UserService;
+import com.cmmplb.security.oauth2.auth.service.UserDetailsServiceImpl;
 import com.cmmplb.security.oauth2.start.token.MobileAuthenticationToken;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +29,7 @@ public class MobileAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
     private RedisService redisService;
 
-    private UserService userService;
+    private UserDetailsServiceImpl userService;
 
     /**
      * 认证逻辑校验

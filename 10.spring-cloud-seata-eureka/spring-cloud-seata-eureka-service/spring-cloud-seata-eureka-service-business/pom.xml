@@ -5,7 +5,7 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-cloud-seata-eureka-service</artifactId>
-        <groupId>com.cmmplb.seata</groupId>
+        <groupId>com.cmmplb</groupId>
         <version>1.0.0</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
@@ -17,23 +17,14 @@
     <!-- 项目名称 -->
     <name>${project.artifactId}</name>
     <!-- 描述信息 -->
-    <description>spring-cloud-seata-eureka-service-business</description>
+    <description>${project.artifactId}</description>
 
     <!-- 依赖 -->
     <dependencies>
-        <!-- business模块 -->
+        <!-- spring-cloud-seata-eureka-service-user模块 -->
         <dependency>
-            <groupId>com.cmmplb.seata</groupId>
-            <artifactId>spring-cloud-seata-eureka-api-business</artifactId>
-        </dependency>
-        <!-- user模块 -->
-        <dependency>
-            <groupId>com.cmmplb.seata</groupId>
-            <artifactId>spring-cloud-seata-eureka-api-user</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+            <groupId>com.cmmplb</groupId>
+            <artifactId>spring-cloud-seata-eureka-service-user</artifactId>
         </dependency>
     </dependencies>
 </project>

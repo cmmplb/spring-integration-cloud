@@ -1,7 +1,7 @@
 package com.cmmplb.security.oauth2.auth.provider;
 
 import com.cmmplb.security.oauth2.start.constants.Oauth2Constants;
-import com.cmmplb.security.oauth2.auth.service.UserService;
+import com.cmmplb.security.oauth2.auth.service.UserDetailsServiceImpl;
 import com.cmmplb.security.oauth2.start.entity.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationProviderImpl implements AuthenticationProvider {
 
     @Autowired
-    private UserService userService;
+    private UserDetailsServiceImpl userService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

@@ -5,7 +5,7 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-cloud-seata-eureka</artifactId>
-        <groupId>com.cmmplb.seata</groupId>
+        <groupId>com.cmmplb</groupId>
         <version>1.0.0</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
@@ -17,18 +17,13 @@
     <!-- 项目名称 -->
     <name>${project.artifactId}</name>
     <!-- 描述信息 -->
-    <description>spring-cloud-seata-eureka-common</description>
+    <description>${project.artifactId}</description>
 
     <!-- 依赖 -->
     <dependencies>
         <!-- web模块 -->
         <dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- web起步依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- 测试包 -->
@@ -41,6 +36,34 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+        <!-- mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!-- MySQL数据库驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid-spring-boot-starter.version}</version>
+        </dependency>
+        <!-- seata -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <version>${spring-cloud-starter-alibaba-seata.version}</version>
+        </dependency>
+        <!-- openfeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 </project>

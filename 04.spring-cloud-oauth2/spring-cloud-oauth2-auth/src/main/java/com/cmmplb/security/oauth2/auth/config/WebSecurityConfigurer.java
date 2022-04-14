@@ -1,11 +1,10 @@
 package com.cmmplb.security.oauth2.auth.config;
 
-import com.cmmplb.common.redis.service.RedisService;
-import com.cmmplb.security.oauth2.auth.exception.resource.filter.Oauth2TokenFilter;
+import com.cmmplb.redis.service.RedisService;
 import com.cmmplb.security.oauth2.auth.handler.BaseAuthenticationFailureHandler;
 import com.cmmplb.security.oauth2.auth.handler.SsoLogoutSuccessHandler;
 import com.cmmplb.security.oauth2.auth.provider.MobileAuthenticationProvider;
-import com.cmmplb.security.oauth2.auth.service.UserService;
+import com.cmmplb.security.oauth2.auth.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * @author penglibo
@@ -41,7 +39,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private BaseAuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
-    private UserService userService;
+    private UserDetailsServiceImpl userService;
 
     @Autowired
     private RedisService redisService;

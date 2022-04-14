@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.auth.service.impl;
 
-import com.cmmplb.security.oauth2.auth.service.UserService;
+import com.cmmplb.security.oauth2.auth.service.UserDetailsServiceImpl;
 import com.cmmplb.security.oauth2.start.entity.AuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class UserDetailServiceImpl implements UserService {
+public class UserDetailServiceImpl implements UserDetailsServiceImpl {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
