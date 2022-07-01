@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider-service
+  namespace: cmmplb
+  labels:
+    app: provider-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider-service
+  template:
+    metadata:
+      labels:
+        app: provider-service
+    spec:
+      containers:
+        - name: provider-service
+          image: "registry.cn-hangzhou.aliyuncs.com/cmmplb/spring-cloud-kubernetes-service-provider:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: provider-service
+  namespace: cmmplb
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30082
+  selector:
+    app: provider-service

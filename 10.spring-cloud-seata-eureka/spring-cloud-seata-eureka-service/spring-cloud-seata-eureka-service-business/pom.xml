@@ -21,10 +21,10 @@
 
     <!-- 依赖 -->
     <dependencies>
-        <!-- spring-cloud-seata-eureka-service-user模块 -->
+        <!-- api-business模块 -->
         <dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-cloud-seata-eureka-service-user</artifactId>
+            <artifactId>spring-cloud-seata-eureka-service-api-business</artifactId>
         </dependency>
     </dependencies>
 </project>

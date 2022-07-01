@@ -35,7 +35,7 @@
         <module>spring-cloud-seata-nacos-api</module>
         <module>spring-cloud-seata-nacos-common</module>
         <module>spring-cloud-seata-nacos-common-db</module>
-        <module>spring-cloud-seata-nacos-nacos</module>
+        <module>spring-cloud-seata-nacos-server</module>
         <module>spring-cloud-seata-nacos-service</module>
     </modules>
 

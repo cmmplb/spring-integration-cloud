@@ -24,6 +24,7 @@
         <module>spring-cloud-seata-eureka-common</module>
         <module>spring-cloud-seata-eureka-server</module>
         <module>spring-cloud-seata-eureka-service</module>
+        <module>spring-cloud-seata-eureka-service-api</module>
     </modules>
 
     <!-- 依赖声明 -->
@@ -35,16 +36,16 @@
                 <artifactId>spring-cloud-seata-eureka-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- user模块 -->
+            <!-- api-user模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-cloud-seata-eureka-service-user</artifactId>
+                <artifactId>spring-cloud-seata-eureka-service-api-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- business模块 -->
+            <!-- api-business模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-cloud-seata-eureka-service-business</artifactId>
+                <artifactId>spring-cloud-seata-eureka-service-api-business</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- spring-cloud-starter-netflix-ribbon -->

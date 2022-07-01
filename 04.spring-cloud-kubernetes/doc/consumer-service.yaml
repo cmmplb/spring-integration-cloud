@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer-service
+  namespace: cmmplb
+  labels:
+    app: consumer-service
+spec:
+  type: NodePort
+  ports:
+    - port: 8081
+      nodePort: 30081
+      protocol: TCP
+      name: http
+  selector:
+    app: consumer-service
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-service
+  namespace: cmmplb
+  labels:
+    app: consumer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-service
+  template:
+    metadata:
+      labels:
+        app: consumer-service
+    spec:
+      containers:
+        - name: consumer-service
+          image: "registry.cn-hangzhou.aliyuncs.com/cmmplb/spring-cloud-kubernetes-service-consumer:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+
