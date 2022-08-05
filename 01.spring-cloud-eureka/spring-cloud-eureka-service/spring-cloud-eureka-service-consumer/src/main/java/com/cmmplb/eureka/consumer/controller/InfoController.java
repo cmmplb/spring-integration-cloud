@@ -41,6 +41,7 @@ public class InfoController {
     @GetMapping("/provider")
     public String providerInfo() {
         return this.restTemplate.getForEntity("http://spring-cloud-eureka-provider/info", String.class).getBody();
+        // return this.restTemplate.getForEntity("http://localhost:80/info", String.class).getBody();
     }
 
     @GetMapping("/provider/feign")
