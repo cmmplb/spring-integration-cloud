@@ -121,7 +121,8 @@ public class JwtTokenUtils {
 	 */
 	public Authentication getAuthentication(String token) {
 
-		Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		// Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
 
 		List<GrantedAuthority> authorities = AuthorityUtils
 				.commaSeparatedStringToAuthorityList((String) claims.get(AUTHORITIES_KEY));
@@ -135,12 +136,14 @@ public class JwtTokenUtils {
 	 * @param token token
 	 * @return whether valid
 	 */
+	@SuppressWarnings("PlaceholderCountMatchesArgumentCount")
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 			return true;
 		}
-		catch (SignatureException e) {
+		// catch (SignatureException e) {
+		catch (SecurityException e) {
 			log.info("Invalid JWT signature.");
 			log.trace("Invalid JWT signature trace: {}", e);
 		}

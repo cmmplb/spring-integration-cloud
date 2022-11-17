@@ -1,0 +1,29 @@
+# 服务端口
+server.port: 18081
+# 路径
+server.servlet.context-path: /
+# 关闭banner
+spring.main.banner-mode: off
+# 激活配置
+spring.profiles.active: @profiles.active@
+# 应用程序名称
+spring.application.name: @project.artifactId@
+# 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
+spring.main.allow-bean-definition-overriding: true
+# =====================================================================================
+# spring2.4分组配置
+spring.profiles.group:
+  local:
+    - context
+    - eureka_client
+    - kubernetest
+    - logging
+    - management
+    - tomcat
+  dev:
+    - context
+    - eureka_client
+    - kubernetest
+    - logging
+    - management
+    - tomcat

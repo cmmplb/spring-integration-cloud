@@ -21,11 +21,30 @@
 
     <!-- 子模块 -->
     <modules>
-        <module>spring-cloud-oauth2-starter</module>
         <module>spring-cloud-oauth2-auth</module>
-        <module>spring-cloud-oauth2-client</module>
-        <module>spring-cloud-oauth2-client-sso</module>
+        <module>spring-cloud-oauth2-service</module>
+        <module>spring-cloud-oauth2-starter</module>
     </modules>
+
+    <properties>
+        <mysql.username>root</mysql.username>
+        <mysql.password>cmmplb</mysql.password>
+        <mysql.url>localhost:3306/spring_cloud_oauth2</mysql.url>
+        <redis.password>cmmplb</redis.password>
+        <redis.standalone.host>localhost</redis.standalone.host>
+        <redis.standalone.port>6379</redis.standalone.port>
+        <redis.sentinel.master>mymaster</redis.sentinel.master>
+        <redis.sentinel.nodes>193.112.252.232:26379,193.112.252.232:26380,193.112.252.232:26381</redis.sentinel.nodes>
+        <redis.cluster.nodes>
+            193.112.252.232:6371,193.112.252.232:6372,193.112.252.232:6373,193.112.252.232:6374,193.112.252.232:6375,193.112.252.232:6376
+        </redis.cluster.nodes>
+
+        <!-- project-port -->
+        <auth.port>18080</auth.port>
+        <client.port>18081</client.port>
+        <client.sso.port>18082</client.sso.port>
+        <system.port>18083</system.port>
+    </properties>
 
     <!-- 依赖管理 -->
     <dependencyManagement>

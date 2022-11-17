@@ -1,0 +1,8 @@
+# 负载均衡器缓存
+spring:
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s

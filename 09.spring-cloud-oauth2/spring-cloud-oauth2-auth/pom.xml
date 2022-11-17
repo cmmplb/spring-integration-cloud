@@ -26,21 +26,17 @@
             <groupId>com.cmmplb</groupId>
             <artifactId>spring-cloud-oauth2-starter</artifactId>
         </dependency>
-        <!-- redis模块 -->
+        <!-- mysql-->
         <dependency>
-            <groupId>com.cmmplb</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
-        </dependency>
-        <!-- freemarker -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <!--jdbc相关-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
 </project>

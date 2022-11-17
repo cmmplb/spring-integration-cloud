@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @EnableApolloConfig // 默认读取的是application.properties 与yml读取冲突后读取了properties
 @SpringBootApplication
-// @EnableDiscoveryClient // Dalston.SR4版本之前主函数上需要添加对应的注解；而Edgware.RELEASE之后的版本可以不添加
 public class ApolloClientApplication {
 
     public static void main(String[] args) {

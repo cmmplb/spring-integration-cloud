@@ -21,20 +21,20 @@
 
     <!-- 子模块 -->
     <modules>
-        <module>spring-cloud-kubernetes-service</module>
-        <module>spring-cloud-kubernetes-service-api</module>
+        <module>spring-cloud-kubernetes-loadbalancer</module>
+        <module>spring-cloud-kubernetes-loadbalancer-api</module>
+        <module>spring-cloud-kubernetes-register</module>
     </modules>
 
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
-            <!-- kubernetes-service-api-provider -->
+            <!-- spring-cloud-kubernetes-loadbalancer-api-provider -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-cloud-kubernetes-service-api-provider</artifactId>
+                <artifactId>spring-cloud-kubernetes-loadbalancer-api-provider</artifactId>
                 <version>${project.varsion}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>

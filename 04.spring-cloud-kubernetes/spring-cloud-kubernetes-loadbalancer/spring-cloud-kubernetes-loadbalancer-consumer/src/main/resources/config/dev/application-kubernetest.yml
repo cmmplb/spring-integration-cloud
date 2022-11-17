@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: true
+      client:
+        namespace: cmmplb
+      reload:
+        # 自动更新配置的开关设置为打开
+        enabled: false
+        # 更新配置信息的模式：polling是主动拉取，event是事件通知
+        mode: polling
+        # 主动拉取的间隔时间是500毫秒
+        period: 5000

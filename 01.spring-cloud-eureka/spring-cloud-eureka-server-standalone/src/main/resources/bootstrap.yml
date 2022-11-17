@@ -1,0 +1,24 @@
+# 服务端口
+server.port: 8080
+# 路径
+server.servlet.context-path: /
+# 关闭banner
+spring.main.banner-mode: off
+# 应用程序名称
+spring.application.name: @project.artifactId@
+# 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
+spring.main.allow-bean-definition-overriding: true
+# Spring Boot 2.6.0+设置允许循环依赖
+# spring.main.allow-circular-references: true
+# 激活配置
+spring.profiles.active: local
+# spring2.4+分组配置
+spring.profiles.group:
+  local:
+    - eureka-server
+    - loadbalancer
+    - logging
+    - management
+#===============================dev===============================
+---
+spring.config.activate.on-profile: local

@@ -1,0 +1,2 @@
+# 关闭eureka注册，采用k8s服务订阅
+eureka.client.enabled: false

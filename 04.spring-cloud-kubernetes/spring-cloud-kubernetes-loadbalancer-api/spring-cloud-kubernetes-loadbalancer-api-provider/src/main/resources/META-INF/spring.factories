@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+      com.cmmplb.kubernetes.loadbalancer.api.provider.client.fallback.RemoteProviderFeignClientFallBack

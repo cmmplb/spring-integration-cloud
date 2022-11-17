@@ -1,0 +1,21 @@
+version: "3"
+services:
+  spring-boot-start:
+    image: registry.cn-hangzhou.aliyuncs.com/cmmplb/spring-cloud-eureka-server-standalone:1.0.0
+    container_name: eureka-standalone
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - COMPOSE_PROJECT_NAME=spring-cloud-eureka-server-standalone
+    volumes:
+      - ./data/:/Users/penglibo/Cmmplb/Logs/
+      - ./data/:/usr/local/cmmplb/logs/
+    networks:
+      - cmmplb
+networks:
+  cmmplb:
+    external: true
+
+# docker启动jar后无法访问，找半天原来是这个配置
+# server.address=127.0.0.1，删除即可

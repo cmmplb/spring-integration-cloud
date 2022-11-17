@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-cloud-kubernetes-loadbalancer-consumer
+  namespace: cmmplb
+  labels:
+    app: spring-cloud-kubernetes-loadbalancer-consumer
+spec:
+  type: NodePort
+  ports:
+    - port: 18081
+      nodePort: 30081
+      protocol: TCP
+      name: http
+  selector:
+    app: spring-cloud-kubernetes-loadbalancer-consumer
+---
+# 创建一个角色，添加权限
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: cmmplb
+  name: endpoints-reader
+  labels:
+    app: spring-cloud-kubernetes-loadbalancer-consumer
+rules:
+  - apiGroups: [""] # "" 指定核心 API 组
+    resources: ["endpoints","services"]
+    verbs: ["get", "watch", "list"]
+---
+# 绑定
+apiVersion: rbac.authorization.k8s.io/v1
+# 此角色绑定使得用户 "jane" 能够读取 "default" 命名空间中的 Pods
+kind: RoleBinding
+metadata:
+  name: read-pods-cluster
+  namespace: cmmplb
+  labels:
+    app: spring-cloud-kubernetes-loadbalancer-consumer
+subjects:
+  - kind: ServiceAccount
+    name: default
+    apiGroup: "" #rbac.authorization.k8s.io
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: endpoints-reader # 这里的名称必须与你想要绑定的 Role 或 ClusterRole 名称一致
+  apiGroup: "" # rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-cloud-kubernetes-loadbalancer-consumer
+  namespace: cmmplb
+  labels:
+    app: spring-cloud-kubernetes-loadbalancer-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-cloud-kubernetes-loadbalancer-consumer
+  template:
+    metadata:
+      labels:
+        app: spring-cloud-kubernetes-loadbalancer-consumer
+    spec:
+      # 拉取私有镜像配置Secret，没有就创建kubectl create secret docker-registry aliyun-registry --docker-server=registry.cn-hangzhou.aliyuncs.com --docker-username=xxx --docker-password=xxx -n cmmplb
+      # kubectl get secret aliyun-registry -o yaml -n cmmplb
+      imagePullSecrets:
+        - name: aliyun-registry
+      containers:
+        - name: spring-cloud-kubernetes-loadbalancer-consumer
+          image: "registry.cn-hangzhou.aliyuncs.com/cmmplb/spring-cloud-kubernetes-loadbalancer-consumer:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 18081
+              protocol: TCP
+
