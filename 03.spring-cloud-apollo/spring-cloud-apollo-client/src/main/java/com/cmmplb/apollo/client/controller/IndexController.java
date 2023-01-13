@@ -25,11 +25,18 @@ public class IndexController {
     @Autowired
     private Environment env; // 这个可以动态刷新
 
+    // apollo中的配置修改后，应用中不会动态刷新，需要手动编写程序实现动态刷新。因为spring启动时，已读取配置值且生成了对象。之后再修改配置值后，对象中的属性值并不会改变。
+    // 1）基于RefreshScope结合@ApolloConfigChangeListener实现
+    // 2）基于EnvironmentChangeEvent结合@ApolloConfigChangeListener实现
+    // properties添加@RefreshScope
     @Autowired
     private ApolloProperties apolloProperties; // 这个修改没生效
 
     @Value("${apollo.name}")
     private String name; // 这个可以动态刷新
+
+    @Value("${test.name}")
+    private String testName; // 这个可以动态刷新
 
 
     @RequestMapping("/")
@@ -40,6 +47,7 @@ public class IndexController {
 
         System.out.println("env:" + env.getProperty("apollo.name"));
         System.out.println("value:" + name);
+        System.out.println("testName:" + testName);
         System.out.println("properties:" + apolloProperties.getName());
         return ResultUtil.success();
     }

@@ -3,14 +3,14 @@ apollo:
   # cache-dir: ./config
   # demo.sh中8080启动的eureka
   # 也可以在启动时指定option=>-Dapollo.configService=http://193.112.252.232:8080
-  # meta: http://193.112.252.232:8080
+#  meta: http://193.112.252.232:8080
   bootstrap:
     # 设置在应用启动阶段就加载 Apollo 配置
     enabled: true
     eagerLoad:
       # 将Apollo配置加载提到初始化日志系统之前。
       enabled: true
-    namespaces: client.yml,application
+    namespaces: client.yml,test.yml,application
 app:
   # 应用全局唯一的身份标识
   id: cmmplb
