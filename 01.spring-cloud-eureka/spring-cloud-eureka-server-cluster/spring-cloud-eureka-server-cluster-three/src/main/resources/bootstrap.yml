@@ -1,19 +1,20 @@
 # 服务端口
-server.port: @spring-cloud-eureka-loadbalancer-provider-two.port@
+server.port: @spring-cloud-eureka-server-cluster-three.port@
 # 路径
 server.servlet.context-path: /
 # 关闭banner
 spring.main.banner-mode: off
 # 应用程序名称
-spring.application.name: spring-cloud-eureka-provider
+spring.application.name: @project.artifactId@
 # 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
 spring.main.allow-bean-definition-overriding: true
 
 # =====================================================================================
 # 引用配置文件
 spring.profiles.include:
-  - eureka-client
+  - eureka-server
   - loadbalancer
   - logging
   - management
+  - security
   - tomcat

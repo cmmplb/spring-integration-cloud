@@ -56,7 +56,7 @@ eureka:
     #hostname: 127.0.0.1 # localhost
     #hostname: ${spring.cloud.client.ip-address}
     # 实例ip地址, 填写localhost的话集群页面上只显示一个, 这里通过改hosts文件配置了3个域名对应127.0.0.1
-    hostname: @spring-cloud-eureka-server-cluster-one.host@
+    hostname: @spring-cloud-eureka-server-cluster-three.host@
     # defaultZone无法解析pom文件@variable@, 自定义一个变量做映射
     host:
       one: @spring-cloud-eureka-server-cluster-one.host@
@@ -88,10 +88,10 @@ eureka:
       # 单机指向本身
       #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
       # 集群指向另一台eureka-server, defaultZone无法解析pom文件@variable@, 自定义一个变量做映射
-      #defaultZone: http://${eureka.instance.host.two}:${eureka.instance.port.two}/eureka, http://${eureka.instance.host.three}:${eureka.instance.port.three}/eureka
+      #defaultZone: http://${eureka.instance.host.one}:${eureka.instance.port.one}/eureka, http://${eureka.instance.host.two}:${eureka.instance.port.two}/eureka
       # Eureka服务端配置了密码之后，所有eureka.client.serviceUrl.defaultZone的配置也必须配置上用户名和密码，
       # 格式为：http://${userName}:${password}@${hosetname}:${port}/eureka/
-      defaultZone: http://admin:cmmplb@${eureka.instance.host.two}:${eureka.instance.port.two}/eureka, http://admin:cmmplb@${eureka.instance.host.three}:${eureka.instance.port.three}/eureka
+      defaultZone: http://admin:cmmplb@${eureka.instance.host.one}:${eureka.instance.port.one}/eureka, http://admin:cmmplb@${eureka.instance.host.two}:${eureka.instance.port.two}/eureka
 
   dashboard:
     path: / #设置访问根路径

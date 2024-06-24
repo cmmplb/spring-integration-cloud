@@ -27,6 +27,25 @@
         <module>spring-cloud-eureka-loadbalancer-api</module>
     </modules>
 
+    <properties>
+
+        <!-- 消费者服务端口号 -->
+        <spring-cloud-eureka-loadbalancer-consumer.port>30000</spring-cloud-eureka-loadbalancer-consumer.port>
+        <!-- 提供者服务端口号 -->
+        <spring-cloud-eureka-loadbalancer-provider-one.port>20000</spring-cloud-eureka-loadbalancer-provider-one.port>
+        <spring-cloud-eureka-loadbalancer-provider-two.port>20001</spring-cloud-eureka-loadbalancer-provider-two.port>
+        <!-- eureka单机服务端口 -->
+        <spring-cloud-eureka-server-standalone.port>18080</spring-cloud-eureka-server-standalone.port>
+        <!-- ureka集群服务host, 修改的本地hosts文件, 都对应127.0.0.1 -->
+        <spring-cloud-eureka-server-cluster-one.host>spring-cloud-eureka-server-cluster-one</spring-cloud-eureka-server-cluster-one.host>
+        <spring-cloud-eureka-server-cluster-two.host>spring-cloud-eureka-server-cluster-two</spring-cloud-eureka-server-cluster-two.host>
+        <spring-cloud-eureka-server-cluster-three.host>spring-cloud-eureka-server-cluster-three</spring-cloud-eureka-server-cluster-three.host>
+        <!-- eureka集群服务端口 -->
+        <spring-cloud-eureka-server-cluster-one.port>18081</spring-cloud-eureka-server-cluster-one.port>
+        <spring-cloud-eureka-server-cluster-two.port>18082</spring-cloud-eureka-server-cluster-two.port>
+        <spring-cloud-eureka-server-cluster-three.port>18083</spring-cloud-eureka-server-cluster-three.port>
+    </properties>
+
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>

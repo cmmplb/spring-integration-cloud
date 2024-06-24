@@ -1,6 +1,7 @@
 eureka:
   instance:
     # 执行当前服务的应用id，标识的是每一个具体的的服务(不可以重复)
+    #instanceId: ${spring.application.name}@${spring.cloud.client.ip-address}@${server.port}
     instanceId: ${spring.application.name}@${spring.cloud.client.ip-address}@${server.port}
     # 指定此实例的ip,防止其获取到内网ip无法调用
     # https://www.cnblogs.com/moonandstar08/p/7571610.html
@@ -8,25 +9,36 @@ eureka:
     ip-address: 127.0.0.1
     # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
     prefer-ip-address: true
-    # 每隔5s发送一次心跳
+    # 每隔5s发送一次心跳, 默认30秒
     lease-renewal-interval-in-seconds: 5
-    # 告知服务端10秒还未收到心跳的话，就将该服务移除列表
+    # 告知服务端未xx秒内收到心跳，就将该服务移除列表，即xx秒未续约的服务实例, 参考server的缓存机制, 默认90秒
     lease-expiration-duration-in-seconds: 30
     # 状态页面路径
     status-page-url-path: /actuator/info
     # 健康检查路径
     health-check-url-path: /actuator/health
-
+    #hostname: 127.0.0.1 # localhost
+    hostname: ${spring.cloud.client.ip-address}
+    # defaultZone无法解析pom文件@variable@, 自定义一个变量做映射
+    host:
+      one: @spring-cloud-eureka-server-cluster-one.host@
+      two: @spring-cloud-eureka-server-cluster-two.host@
+      three: @spring-cloud-eureka-server-cluster-three.host@
+    port:
+      one: @spring-cloud-eureka-server-cluster-one.port@
+      two: @spring-cloud-eureka-server-cluster-two.port@
+      three: @spring-cloud-eureka-server-cluster-three.port@
 
   client:
     enabled: true
     # 配置中的  defaultZone 必须是 驼峰格式，不能写成 default-zone，否则，无效。因为，eureka.client.service-url 是一个 Map类型。
-    # 单机配置
-    # service-url.defaultZone: http://@project.address@:8080/eureka
-    # 集群配置
-    # service-url.defaultZone: http://@project.address@:8080/eureka, http://@project.address@:8081/eureka
-    # 集群密码配置
-    service-url.defaultZone: http://admin:cmmplb@${server.address}:8080/eureka, http://admin:cmmplb@${server.address}:8081/eureka
+    service-url:
+      # 单机配置, defaultZone无法解析pom文件@variable@, 自定义一个变量做映射
+      #defaultZone: http://${server.address}:${eureka.instance.port}/eureka
+      # 集群配置
+      #defaultZone: http://${eureka.instance.host.one}:${eureka.instance.port.one}/eureka, http://${eureka.instance.host.two}:${eureka.instance.port.two}/eureka, http://${eureka.instance.host.three}:${eureka.instance.port.three}/eureka
+      # 集群密码配置
+      defaultZone: http://admin:cmmplb@${eureka.instance.host.one}:${eureka.instance.port.one}/eureka, http://admin:cmmplb@${eureka.instance.host.two}:${eureka.instance.port.two}/eureka, http://admin:cmmplb@${eureka.instance.host.three}:${eureka.instance.port.three}/eureka
     # 开启健康检查， 依赖于 spring-boot-starter-actuator
     healthcheck.enabled: true
     # 是否需要将自己注册给自己的注册中心-默认true

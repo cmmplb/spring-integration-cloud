@@ -53,7 +53,10 @@ eureka:
     status-page-url-path: /actuator/info
     # 健康检查路径
     health-check-url-path: /actuator/health
-    hostname: ${server.address:127.0.0.1} #127.0.0.1
+    #hostname: 127.0.0.1
+    # 实例ip地址
+    hostname: ${spring.cloud.client.ip-address}
+    #hostname: localhost
 
   client:
     enabled: true

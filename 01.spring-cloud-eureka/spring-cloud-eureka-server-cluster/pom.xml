@@ -23,6 +23,7 @@
     <modules>
         <module>spring-cloud-eureka-server-cluster-one</module>
         <module>spring-cloud-eureka-server-cluster-two</module>
+        <module>spring-cloud-eureka-server-cluster-three</module>
     </modules>
 
     <!-- 依赖 -->

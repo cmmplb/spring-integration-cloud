@@ -1,5 +1,5 @@
 # 服务端口
-server.port: 82
+server.port: @spring-cloud-eureka-loadbalancer-consumer.port@
 # 路径
 server.servlet.context-path: /
 # 关闭banner

@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @since jdk 1.8
  */
 
-@EnableFeignClients("com.cmmplb.eureka.provider")
+@EnableFeignClients("com.cmmplb.eureka.loadbalancer.provider")
 @SpringBootApplication
 public class EurekaConsumerApplication {
 

@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: false
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s

@@ -1,5 +1,5 @@
 # 服务端口
-server.port: 8080
+server.port: @spring-cloud-eureka-server-standalone.port@
 # 路径
 server.servlet.context-path: /
 # 关闭banner
