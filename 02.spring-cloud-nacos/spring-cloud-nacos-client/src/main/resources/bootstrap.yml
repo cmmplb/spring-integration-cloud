@@ -25,19 +25,20 @@ spring.profiles.group:
 spring.config.activate.on-profile: local
 # 本地服务注册
 spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
-spring.cloud.nacos.discovery.group: DEFAULT_GROUP # 默认值DEFAULT_GROUP
-spring.cloud.nacos.discovery.namespace: public # 默认值DEFAULT_GROUP
+# 默认值DEFAULT_GROUP
+spring.cloud.nacos.discovery.group: DEFAULT_GROUP
+# 默认值public
+spring.cloud.nacos.discovery.namespace: public
 # 关闭配置拉取
 spring.cloud.nacos.config.enabled: false
-
 #===============================prod=================================
 ---
 spring.config.activate.on-profile: prod
 # 指定ip地址，docker网络注册实例时使用了内网ip，如果要指定外网访问的话就配置或者nginx代理
 # spring.cloud.nacos.discovery.ip: @prod.nacos.ip@
 # spring.cloud.nacos.discovery.port: ${server.port}
-# 服务注册
-spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+# 服务注册-nacos地址
+spring.cloud.nacos.discovery.server-addr: localhost:8848
 spring.cloud.nacos.discovery.group: DEFAULT_GROUP
 spring.cloud.nacos.discovery.namespace: public
 # 配置获取

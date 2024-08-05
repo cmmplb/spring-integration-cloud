@@ -23,13 +23,13 @@
     <modules>
         <module>spring-cloud-oauth2-auth</module>
         <module>spring-cloud-oauth2-service</module>
-        <module>spring-cloud-oauth2-starter</module>
+        <module>spring-cloud-oauth2-resource-starter</module>
     </modules>
 
     <properties>
         <mysql.username>root</mysql.username>
         <mysql.password>cmmplb</mysql.password>
-        <mysql.url>localhost:3306/spring_cloud_oauth2</mysql.url>
+        <mysql.url>localhost:3306/oauth2</mysql.url>
         <redis.password>cmmplb</redis.password>
         <redis.standalone.host>localhost</redis.standalone.host>
         <redis.standalone.port>6379</redis.standalone.port>
@@ -40,10 +40,10 @@
         </redis.cluster.nodes>
 
         <!-- project-port -->
-        <auth.port>18080</auth.port>
-        <client.port>18081</client.port>
-        <client.sso.port>18082</client.sso.port>
-        <system.port>18083</system.port>
+        <auth.port>10000</auth.port>
+        <client.port>20000</client.port>
+        <client.sso.port>30000</client.sso.port>
+        <system.port>40000</system.port>
     </properties>
 
     <!-- 依赖管理 -->
@@ -52,7 +52,7 @@
             <!-- oauth2-start模块 -->
             <dependency>
                 <groupId>com.cmmplb</groupId>
-                <artifactId>spring-cloud-oauth2-starter</artifactId>
+                <artifactId>spring-cloud-oauth2-resource-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

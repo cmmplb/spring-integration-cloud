@@ -8,7 +8,7 @@ import com.cmmplb.core.exception.CustomException;
 import com.cmmplb.oauth2.system.dao.UserMapper;
 import com.cmmplb.oauth2.system.entity.User;
 import com.cmmplb.oauth2.system.service.UserService;
-import com.cmmplb.security.oauth2.starter.provider.converter.UserInfoVO;
+import com.cmmplb.security.oauth2.starter.converter.UserInfoVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -36,7 +36,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserInfoVO getByMobile(String mobile) {
-        User user = baseMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, mobile));
+        User user = baseMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getMobile, mobile));
         if (null == user) {
             throw new CustomException("用户信息不存在");
         }
@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userInfoVO.setUser(userVO);
         List<String> roleCodes = baseMapper.selectRoleCodesById(user.getId());
         if (!CollectionUtils.isEmpty(roleCodes)) {
-            List<String> permissionCodes = baseMapper.selectPermissionCodesByRoleCodes(CollUtil.join(roleCodes, StrUtil.COMMA));
+            List<String> permissionCodes = baseMapper.selectPermissionCodesByRoleCodes(roleCodes);
             // 设置角色编码
             userInfoVO.setRoles(new HashSet<>(roleCodes));
             // 设置菜单按钮权限编码

@@ -54,9 +54,9 @@ eureka:
     # 健康检查路径
     health-check-url-path: /actuator/health
     #hostname: 127.0.0.1
-    # 实例ip地址
-    hostname: ${spring.cloud.client.ip-address}
-    #hostname: localhost
+    # 实例ip地址, 这个单机会出现警告，注册中心找不到复制节点，所以集群建立失败。集群不会：The replica size seems to be empty. Check the route 53 DNS Registry
+    #hostname: ${spring.cloud.client.ip-address}
+    hostname: localhost
 
   client:
     enabled: true

@@ -1,0 +1,16 @@
+security:
+  oauth2:
+    resource:
+      # 资源id
+      id: system
+      # token-info-uri和user-info-uri配置其中一个就行, 同时配置的话则看prefer-token-info
+      # 使用RemoteTokenServices远程调用认证中心接口校验token获取用户认证信息-OAuth2Authentication
+      token-info-uri: http://localhost:@auth.port@/oauth/check_token
+      # 使用token-info-uri模式, 默认为true
+      prefer-token-info: false
+      # 使用UserInfoTokenServices远程调用认证中心接口获取当前用户认证信息-OAuth2Authentication
+      user-info-uri: http://localhost:@auth.port@/user/info
+      # 验证使用jwt时，需要注释上面两个url
+      jwt:
+        # 获取认证服务公钥的地址
+        key-uri: http://localhost:@auth.port@/oauth/token_key

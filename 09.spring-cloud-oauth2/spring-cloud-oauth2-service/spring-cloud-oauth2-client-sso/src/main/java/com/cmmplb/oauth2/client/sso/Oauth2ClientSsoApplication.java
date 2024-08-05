@@ -11,9 +11,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
  * @date 2021-04-01 21:07:28
  */
 
-@Slf4j
 @EnableOAuth2Sso
-@EnableResourceServer
 @SpringBootApplication
 public class Oauth2ClientSsoApplication {
 

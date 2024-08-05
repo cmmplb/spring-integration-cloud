@@ -23,7 +23,6 @@
     <modules>
         <module>spring-cloud-kubernetes-loadbalancer</module>
         <module>spring-cloud-kubernetes-loadbalancer-api</module>
-        <module>spring-cloud-kubernetes-register</module>
     </modules>
 
     <!-- 依赖管理 -->
@@ -33,7 +32,7 @@
             <dependency>
                 <groupId>com.cmmplb</groupId>
                 <artifactId>spring-cloud-kubernetes-loadbalancer-api-provider</artifactId>
-                <version>${project.varsion}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -2,7 +2,7 @@ package com.cmmplb.auth2.auth.controller;
 
 import com.cmmplb.auth2.auth.dto.OauthToken;
 import com.cmmplb.auth2.auth.dto.RefreshInfoDTO;
-import com.cmmplb.core.constants.SecurityConstants;
+import com.cmmplb.core.constants.SecurityConstant;
 import com.cmmplb.core.exception.CustomException;
 import com.cmmplb.core.result.Result;
 import com.cmmplb.core.result.ResultUtil;
@@ -10,23 +10,26 @@ import com.cmmplb.core.utils.ObjectUtil;
 import com.cmmplb.core.utils.StringUtil;
 import com.cmmplb.redis.service.RedisService;
 import com.cmmplb.security.oauth2.starter.annotation.WithoutLogin;
+import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
 import com.cmmplb.security.oauth2.starter.constants.CacheConstants;
-import com.cmmplb.security.oauth2.starter.provider.converter.User;
+import com.cmmplb.security.oauth2.starter.converter.User;
+import com.cmmplb.security.oauth2.starter.service.UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +48,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@EnableConfigurationProperties(Oauth2ConfigProperties.class)
 public class LoginController {
 
     @Autowired
@@ -56,24 +60,26 @@ public class LoginController {
     @Autowired
     private TokenEndpoint tokenEndpoint;
 
+    @Autowired(required = false)
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private Oauth2ConfigProperties oauth2ConfigProperties;
+
     @Autowired
     private OAuth2ClientProperties oAuth2ClientProperties;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    @Autowired(required = false)
+    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
     @SuppressWarnings("AlibabaThreadLocalShouldRemove")
     private final ThreadLocal<Long> USER_ID = new NamedThreadLocal<Long>("user_id");
 
     /**
      * 由于原生的登陆表单没有提交json
-     * @param token
-     * @return
-     * @throws HttpRequestMethodNotSupportedException
      */
     @PostMapping("/login")
     @WithoutLogin
-    // @Log(type = LogOperationTypeEnum.LOGIN, content = "login")
     public Result<OAuth2AccessToken> getToken(@RequestBody OauthToken token) throws HttpRequestMethodNotSupportedException {
         Map<String, String> params = new HashMap<>();
         params.put("username", token.getUsername());
@@ -85,13 +91,12 @@ public class LoginController {
         try {
             oAuth2AccessToken = tokenEndpoint.postAccessToken(usernamePasswordAuthentication, params);
         } catch (InvalidGrantException e) {
-            e.printStackTrace();
             log.error("error:", e);
-            throw new CustomException(SecurityConstants.BAD_CREDENTIALS);
+            throw new CustomException(SecurityConstant.BAD_CREDENTIALS);
         }
         OAuth2AccessToken accessTokenBody = oAuth2AccessToken.getBody();
-        if (null == accessTokenBody){
-            throw new CustomException(SecurityConstants.BAD_CREDENTIALS);
+        if (null == accessTokenBody) {
+            throw new CustomException(SecurityConstant.BAD_CREDENTIALS);
         }
         Map<String, Object> additionalInformation = accessTokenBody.getAdditionalInformation();
         // 登陆成功,传递user_id，日志切面记录登陆日志
@@ -100,7 +105,6 @@ public class LoginController {
     }
 
     @PostMapping("/do/logout")
-    // @Log(type = LogOperationTypeEnum.LOGOUT, content = "logout")
     public Result<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
         if (StringUtil.isEmpty(authHeader)) {
             return ResultUtil.success();
@@ -148,5 +152,16 @@ public class LoginController {
             }
         }
         return ResultUtil.success(true);
+    }
+
+    /**
+     * 用户信息
+     */
+    public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+        if (oauth2ConfigProperties.getUserDetailsServiceType().equals(Oauth2ConfigProperties.UserDetailsServiceType.JDBC)) {
+            return userDetailsService;
+        } else {
+            return inMemoryUserDetailsManager;
+        }
     }
 }

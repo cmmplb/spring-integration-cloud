@@ -1,20 +1,120 @@
-
 security:
   oauth2:
-    client:
-      client-id: spring_cloud_oauth2
-      client-secret: 123456
-      registered-redirect-uri: http://localhost/api/spring-boot-security-oauth2-auth
-    resource:
-      id: resource-server
-      # user-info-uri和token-info-uri二选择即可
-      # 如果配置了user-info-uri，该资源服务器使用userInfoTokenServices远程调用认证中心接口，
-      # 通过认证中心的OAuth2AuthenticationProcessingFilter完成验证工作，一般设置user-info-uri即可
-      #user-info-uri: http://127.0.0.1:8001/user
-      prefer-token-info: false
-      # 该资源服务器使用RemoteTokenServices远程调用认证中心接口，注意一点就是如果使用token-info-uri那么就必须设置上clientId和clientSecret，
-      # 通过CheckTokenEndpoint完成验证工作
-      token-info-uri: http://localhost/api/spring-cloud-oauth2-auth/oauth/check_token
-      #registered-redirect-uri: http://localhost
-#http://localhost:18080/oauth/authorize?response_type=code&client_id=spring_cloud_oauth2&redirect_uri=http://localhost:18080&scope=all&state=hello
-#http://localhost/oauth/authorize?response_type=code&client_id=client&redirect_uri=http://localhost&scope=all&state=hello
+    # 令牌存储类型: IN_MEMORY, JDBC, JWT, REDIS
+    tokenStoreType: JWT
+    # Jwt密钥配置
+    jwt-key:
+      # 是否为授权服务
+      authorized: true
+      # 服务端密钥配置
+      authorization:
+        # 是否对称加密, 默认为true
+        symmetric: false
+        # 对称加密签名密钥
+        signingKey: cmmplb
+        # 非对称加密密钥路径
+        key-path: key/oauth2.jks
+        # 非对称加密密钥密码
+        pass: oauth2
+        # 非对称加密密钥别名
+        alias: oauth2
+    # 授权码存储类型: IN_MEMORY, JDBC, REDIS
+    authorizationCodeServicesType: REDIS
+    # 用户信息类型: IN_MEMORY, JDBC
+    userDetailsServiceType: JDBC
+    # 客户端信息类型: IN_MEMORY, JDBC, REDIS
+    clientDetailsServiceType: REDIS
+    # 用户信息配置, 如果未定义数据库配置, 则使用此配置, 基于内存配置
+    users:
+      - # 用户名, 模拟管理员用户
+        username: admin
+        # 密码
+        password: 123456
+        # 角色
+        roles:
+          - admin
+        # 权限
+        authorities:
+          - read
+          - write
+      - # 用户名, 模拟普通用户
+        username: user
+        password: 123456
+        roles:
+          - user
+        authorities:
+          - read
+    # 客户端信息配置, 如果未定义数据库配置, 则使用此配置, 基于内存配置
+    clients:
+      - # 客户端id
+        client-id: web
+        # 客户端密钥, 注意数据库存储的时候需要加密
+        client-secret: 123456
+        # 是否自动授权, 为false登录后会跳转到授权页面
+        auto-approve-scopes:
+          - false
+        # 授权范围
+        scope:
+          - username
+          - phone
+          - age
+        # 令牌有效期, 默认为12小时
+        access-token-validity-seconds: 43200
+        # 刷新令牌有效期, 默认为30天
+        refresh-token-validity-seconds: 2592000
+        # 登录成功回调地址, 这里如果配置了多个, 则请求地址需要携带redirect_uri参数, 并且值是配置的其中一个, 如果只配置一个, 则可以不带redirect_uri参数
+        registered-redirect-uri:
+          - http://localhost:10000/auth/actuator/health
+          - http://localhost:20000/actuator/health
+          - http://localhost:18080/auth
+        # 授权类型
+        authorized-grant-types:
+          - client_credentials
+          - password
+          - implicit
+          - authorization_code
+          - refresh_token
+      - # 提供给单点服务客户端信息
+        client-id: client
+        client-secret: 123456
+        auto-approve-scopes:
+          - false
+        # 授权范围
+        scope:
+          - username
+          - phone
+          - age
+        registered-redirect-uri:
+          - http://localhost:20000/login
+          - http://127.0.0.1:20000/login
+        authorized-grant-types:
+          - authorization_code
+          - refresh_token
+      - # 提供给单点服务客户端信息
+        client-id: client-sso
+        client-secret: 123456
+        auto-approve-scopes:
+          - false
+        # 授权范围
+        scope:
+          - username
+          - phone
+          - age
+        registered-redirect-uri:
+          - http://localhost:30000/login
+          - http://127.0.0.1:30000/login
+        authorized-grant-types:
+          - authorization_code
+          - refresh_token
+      - # 提供给系统服务校验token的客户端信息
+        client-id: system
+        client-secret: 123456
+        auto-approve-scopes:
+          - false
+        # 授权范围
+        scope:
+          - username
+          - phone
+          - age
+        authorized-grant-types:
+          - client_credentials

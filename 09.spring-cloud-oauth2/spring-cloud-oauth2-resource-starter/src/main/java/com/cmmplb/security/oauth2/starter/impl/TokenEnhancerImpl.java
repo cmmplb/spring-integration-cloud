@@ -1,0 +1,33 @@
+package com.cmmplb.security.oauth2.starter.impl;
+
+import com.cmmplb.security.oauth2.starter.converter.User;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author penglibo
+ * @date 2024-07-26 17:33:04
+ * @since jdk 1.8
+ * 拓展token信息
+ */
+public class TokenEnhancerImpl implements TokenEnhancer {
+
+    @Override
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+        final Map<String, Object> additionalInfo = new HashMap<>(2);
+        if (null != authentication.getUserAuthentication()) {
+            Object principal = authentication.getUserAuthentication().getPrincipal();
+            if (principal instanceof User) {
+                // 添加用户id字段
+                additionalInfo.put(User.COLUMN_ID, ((User) principal).getId());
+            }
+        }
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+        return accessToken;
+    }
+}

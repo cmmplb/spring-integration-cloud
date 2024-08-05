@@ -6,8 +6,6 @@ server.servlet.context-path: /
 spring.main.banner-mode: off
 # 应用程序名称
 spring.application.name: @project.artifactId@
-# 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
-spring.main.allow-bean-definition-overriding: true
 
 # =====================================================================================
 # 引用配置文件
@@ -16,3 +14,5 @@ spring.profiles.include:
   - mybatis_plus
   - redis
   - security_oauth2
+  - security_oauth2_client
+  - security_oauth2_resource

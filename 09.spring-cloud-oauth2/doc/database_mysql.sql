@@ -1,12 +1,3 @@
-DROP DATABASE IF EXISTS `spring_cloud_oauth2`;
-
-CREATE DATABASE `spring_cloud_oauth2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
-USE `spring_cloud_oauth2`;
-
 /**
   系统认证客户端信息表
  */

@@ -21,10 +21,20 @@
 
     <!-- 依赖 -->
     <dependencies>
-        <!-- starter -->
+        <!-- security-oauth2 -->
         <dependency>
-            <groupId>com.cmmplb</groupId>
-            <artifactId>spring-cloud-oauth2-starter</artifactId>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+        </dependency>
+        <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- web启动器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -10,8 +10,29 @@ spring.application.name: @project.artifactId@
 spring.main.allow-bean-definition-overriding: true
 
 # =====================================================================================
-# 引用配置文件
-spring.profiles.include:
-  - apollo
-  - logging
-  - tomcat
+# spring2.4+分组配置
+spring.profiles.group:
+  local:
+    - logging
+    - tomcat
+#===============================local===============================
+---
+spring.config.activate.on-profile: local
+apollo.bootstrap.enabled: false
+#===============================prod===============================
+---
+spring.config.activate.on-profile: prod
+# 自定义本地配置文件缓存路径
+#apollo.cache-dir: ./config
+# demo.sh中8080启动的eureka
+# 也可以在启动时指定option=>-Dapollo.configService=http://193.112.252.232:8080
+#apollo.meta: http://193.112.252.232:8080
+# 设置在应用启动阶段就加载 Apollo 配置
+apollo.bootstrap.enabled: true
+# 将Apollo配置加载提到初始化日志系统之前。
+apollo.bootstrap.eagerLoad.enabled: true
+# 多个,号隔开
+apollo.bootstrap.namespaces: application.yml
+# 应用全局唯一的身份标识
+app.id: cmmplb
+#===============================more...=================================

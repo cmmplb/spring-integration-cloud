@@ -24,7 +24,7 @@
         <!-- starter -->
         <dependency>
             <groupId>com.cmmplb</groupId>
-            <artifactId>spring-cloud-oauth2-starter</artifactId>
+            <artifactId>spring-cloud-oauth2-resource-starter</artifactId>
         </dependency>
         <!-- mysql-->
         <dependency>
@@ -39,4 +39,22 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.jks</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.jks</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

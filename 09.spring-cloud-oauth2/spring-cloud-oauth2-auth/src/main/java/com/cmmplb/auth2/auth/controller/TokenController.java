@@ -5,6 +5,7 @@ import com.cmmplb.core.result.ResultUtil;
 import com.cmmplb.core.utils.SpringUtil;
 import com.cmmplb.core.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -32,41 +33,31 @@ import java.util.Map;
 public class TokenController {
 
     @Autowired
-    @Qualifier("redisTokenStore")
     private TokenStore tokenStore;
 
     /**
      * 退出登录
-     * @param authHeader
-     * @return
      */
     @GetMapping("/logout")
-    public Result<?> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
-        if (StringUtil.isEmpty(authHeader)) {
+    public Result<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization) {
+        if (StringUtils.isEmpty(authorization)) {
             return ResultUtil.success();
         }
-
-        String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StringUtil.EMPTY).trim();
-        OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
-        if (accessToken == null || StringUtil.isEmpty(accessToken.getValue())) {
+        String token = authorization.replace(OAuth2AccessToken.BEARER_TYPE, StringUtils.EMPTY).trim();
+        // 小写的bearer也处理一遍
+        token = token.replace(OAuth2AccessToken.BEARER_TYPE.toLowerCase(), StringUtils.EMPTY).trim();
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
+        if (accessToken == null || StringUtils.isEmpty(accessToken.getValue())) {
             return ResultUtil.success();
         }
-
+        // 认证信息
         OAuth2Authentication auth2Authentication = tokenStore.readAuthentication(accessToken);
-
-        // 清空 access token
-        tokenStore.removeAccessToken(accessToken);
-
-        // 清空 refresh token
-        OAuth2RefreshToken refreshToken = accessToken.getRefreshToken();
-        tokenStore.removeRefreshToken(refreshToken);
-
-
-        Map<String, ?> map = accessToken.getAdditionalInformation();
-        log.info("map:{}", map);
-
-        // 处理自定义退出事件，保存相关日志
+        // 发布退出登录事件
         SpringUtil.publishEvent(new LogoutSuccessEvent(auth2Authentication));
+
+        // 删除accessToken和refreshToken相关信息
+        tokenStore.removeAccessToken(accessToken);
+        tokenStore.removeRefreshToken(accessToken.getRefreshToken());
         return ResultUtil.success();
     }
 }

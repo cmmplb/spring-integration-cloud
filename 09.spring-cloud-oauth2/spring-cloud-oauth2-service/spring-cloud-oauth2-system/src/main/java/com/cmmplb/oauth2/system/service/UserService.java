@@ -3,7 +3,7 @@ package com.cmmplb.oauth2.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cmmplb.oauth2.system.entity.User;
-import com.cmmplb.security.oauth2.starter.provider.converter.UserInfoVO;
+import com.cmmplb.security.oauth2.starter.converter.UserInfoVO;
 
 /**
  * @author penglibo

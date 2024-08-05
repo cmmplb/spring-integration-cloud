@@ -1,83 +1,78 @@
 package com.cmmplb.auth2.auth.configuration;
 
 import com.cmmplb.core.utils.MD5Util;
-import com.cmmplb.redis.service.RedisService;
-import com.cmmplb.security.oauth2.starter.provider.granter.mobile.MobileAuthenticationProvider;
-import com.cmmplb.security.oauth2.starter.provider.granter.thirdParty.ThirdPartyAuthenticationProvider;
-import com.cmmplb.auth2.auth.handler.AuthenticationFailureHandler;
-import com.cmmplb.security.oauth2.starter.handler.SsoLogoutSuccessHandler;
-import com.cmmplb.security.oauth2.starter.provider.AuthenticationProviderImpl;
-import com.cmmplb.security.oauth2.starter.service.impl.UserDetailsServiceImpl;
+import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
+import com.cmmplb.security.oauth2.starter.mobile.MobileAuthenticationProvider;
+import com.cmmplb.security.oauth2.starter.service.UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * @author penglibo
  * @date 2021-11-10 14:17:33
  * @since jdk 1.8
- * security web安全配置,spring-cloud-starter-oauth2依赖于security
- * 默认情况下SecurityConfigurerAdapter执行比ResourceServerConfig先
+ * Security安全配置
  */
 
 @Slf4j
+@Order(1)
+@Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableConfigurationProperties(Oauth2ConfigProperties.class)
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private Oauth2ConfigProperties oauth2ConfigProperties;
 
-    @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
-
-    @Autowired
-    private RedisService redisService;
+    @Autowired(required = false)
+    private UserDetailsService userDetailsService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                // 添加自定义登录处理
-                .authenticationProvider(thirdPartyAuthenticationProvider())
-                // 添加手机号登录处理
-                .authenticationProvider(mobileAuthenticationProvider())
-
-                .formLogin() // 表单登录
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                // .loginProcessingUrl("/login") // 处理表单登录 URL
-                // .successHandler(authenticationSuccessHandler) // 处理登录成功
-                .failureHandler(authenticationFailureHandler) // 处理登录失败
-
-                //.and()
-                //.logout() // 处理sso退出
-                //.logoutUrl("/signout")
-                //.logoutSuccessUrl("/")
-                //.logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("JSESSIONID").invalidateHttpSession(true)
+                // 受保护的资源路径，其他路径则交给资源服务器处理
+                .requestMatchers().antMatchers("/oauth/**", "/login/**", "/logout/**")
                 .and()
-
+                // 注册手机号验证码登录提供器
+                .authenticationProvider(mobileAuthenticationProvider())
+                // 表单登录
+                .formLogin().permitAll()
+                // 登录页面路径，默认/login，由于默认的登录页引用了bootstrapcdn，网络不通情况导致页面一直加载，直到bootstrap.min.css超时才响应，
+                // 这里复制默认的页面，去掉bootstrap的引用，单独下载文件，实现登录功能
+                .loginPage("/oauth/login")
+                // 提交登录的接口路径，默认/login，如果通过网关的话，需要网关添加转发，也可以在路径前添加服务名/auth/login，不过后者单独请求认证服务的话就会404
+                .loginProcessingUrl("/login")
+                .and()
                 .authorizeRequests()
-
-                .antMatchers("/user/**").hasAnyRole("ADMIN") // /user/ 开头的URL需要 ADMIN 权限
-
-                // 拦截地址
-                //.antMatchers("/actuator/**", "/swagger-ui.html").denyAll()
-                // 放行地址
-                .antMatchers("/basic/sms/code", "/basic/map","/login/**", "/logout").permitAll()
-
-                .antMatchers("/actuator/**").denyAll()
-                .antMatchers("/oauth/**", "/login", "/do/logout", "/error", "/css/**", "/static/**").permitAll()
+                // 放行登录页面引用的css
+                .antMatchers("/css/**").permitAll()
                 .anyRequest().authenticated()
-                .and().csrf().disable();
+                .and()
+                // 关闭跨域保护
+                .csrf().disable();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        // 基于thymeleaf映射登录页面
+        registry.addViewController("/oauth/login").setViewName("login-page");
     }
 
     /**
@@ -86,50 +81,45 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-        auth.authenticationProvider(authenticationProvider());
-        auth.authenticationProvider(authenticationProviderImpl());
         auth.authenticationProvider(mobileAuthenticationProvider());
-        auth.authenticationProvider(thirdPartyAuthenticationProvider());
+        if (oauth2ConfigProperties.getUserDetailsServiceType().equals(Oauth2ConfigProperties.UserDetailsServiceType.JDBC)) {
+            auth.userDetailsService(userDetailsService);
+        } else {
+            List<Oauth2ConfigProperties.BaseUserDetails> users = oauth2ConfigProperties.getUsers();
+            // 基于内存中的身份验证
+            InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder> configurer = auth.inMemoryAuthentication()
+                    .passwordEncoder(passwordEncoder());
+            for (Oauth2ConfigProperties.BaseUserDetails user : users) {
+                UserDetailsManagerConfigurer<AuthenticationManagerBuilder, InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder>>.UserDetailsBuilder userDetailsBuilder = configurer
+                        .withUser(user.getUsername());
+                userDetailsBuilder.password(passwordEncoder().encode(user.getPassword()))
+                        .accountExpired(user.isAccountNonExpired()).accountLocked(user.isAccountNonLock())
+                        .credentialsExpired(user.isCredentialsNonExpired()).disabled(user.isDisable());
+                if (!CollectionUtils.isEmpty(user.getRoles())) {
+                    userDetailsBuilder.roles(user.getRoles().toArray(new String[0]));
+                }
+                if (!CollectionUtils.isEmpty(user.getAuthorities())) {
+                    userDetailsBuilder.authorities(user.getAuthorities().toArray(new String[0]));
+                }
+            }
+        }
     }
 
     /**
-     * 自定义验证
-     */
-    private AuthenticationProviderImpl authenticationProviderImpl() {
-        AuthenticationProviderImpl authenticationProvider = new AuthenticationProviderImpl();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsServiceImpl(userDetailsServiceImpl);
-        return authenticationProvider;
-    }
-
-    /**
-     * 默认的提供者
+     * 使用数据库加载用户，注释掉userDetailsServiceBean，不然注入UserDetailsService会显示有多个实现的bean
+     * 也可以不移除，上面注入的private UserDetailsService userDetailsService; 就需要改成具体实现类：private UserDetailsServiceImpl userDetailsServiceImpl
+     * 或者自定义UserDetailsService
      */
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        return daoAuthenticationProvider;
+    @Override
+    public org.springframework.security.core.userdetails.UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
     }
 
-    /**
-     * 不要直接使用@Bean注入 会导致默认的提供者无法注入（DaoAuthenticationProvider）,↑
-     */
-    private ThirdPartyAuthenticationProvider thirdPartyAuthenticationProvider() {
-        ThirdPartyAuthenticationProvider thirdPartyAuthenticationProvider = new ThirdPartyAuthenticationProvider();
-        thirdPartyAuthenticationProvider.setUserDetailsServiceImpl(userDetailsServiceImpl);
-        return thirdPartyAuthenticationProvider;
-    }
-
-    /**
-     * 不要直接使用@Bean注入 会导致默认的提供者无法注入（DaoAuthenticationProvider）
-     */
-    private MobileAuthenticationProvider mobileAuthenticationProvider() {
+    @Bean
+    public MobileAuthenticationProvider mobileAuthenticationProvider() {
         MobileAuthenticationProvider mobileAuthenticationProvider = new MobileAuthenticationProvider();
-        mobileAuthenticationProvider.setUserService(userDetailsServiceImpl);
-        mobileAuthenticationProvider.setRedisService(redisService);
+        mobileAuthenticationProvider.setUserDetailsService(userDetailsService);
         return mobileAuthenticationProvider;
     }
 
@@ -139,21 +129,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    /**
-     * SSO 退出
-     */
-    @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() {
-        return new SsoLogoutSuccessHandler();
-    }
-
-    /**
-     * https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-updated
-     * Encoded password does not look like BCrypt
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         // 自定义MD5加密方式
         return new PasswordEncoder() {
 

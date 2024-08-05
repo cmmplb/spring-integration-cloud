@@ -1,7 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.cmmplb.security.oauth2.starter.aspect.AuthAspect,\
-    com.cmmplb.security.oauth2.starter.handler.GlobalExceptionHandler,\
-    com.cmmplb.security.oauth2.starter.provider.error.AccessDeniedHandler,\
-    com.cmmplb.security.oauth2.starter.service.impl.UserDetailsServiceImpl,\
-    com.cmmplb.security.oauth2.starter.web.ResourceAuthExceptionEntryPoint,\
-    com.cmmplb.security.oauth2.starter.provider.error.GlobalWebResponseExceptionTranslator

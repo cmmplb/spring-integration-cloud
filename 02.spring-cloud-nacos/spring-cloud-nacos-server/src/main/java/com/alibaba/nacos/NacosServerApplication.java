@@ -18,18 +18,17 @@ package com.alibaba.nacos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-/**
- * @author nacos
- * <p>
- * nacos console 源码运行，方便开发 生产建议从官网下载最新版配置运行
- */
-
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
+@ServletComponentScan
+@EnableScheduling
 public class NacosServerApplication {
 
     public static void main(String[] args) {
         if (initEnv()) {
+            // SpringApplicationUtil.run(NacosServerApplication.class, args);
             SpringApplication.run(NacosServerApplication.class, args);
         }
     }
@@ -38,9 +37,12 @@ public class NacosServerApplication {
      * 初始化运行环境
      */
     private static boolean initEnv() {
-        System.setProperty("nacos.standalone", "true"); // The System property name of Standalone mode 单机
-        System.setProperty("nacos.core.auth.enabled", "false"); // 是否开启认证
-        System.setProperty("server.tomcat.basedir", "D:/logs/nacos"); // 日志目录
+        // The System property name of Standalone mode 单机
+        System.setProperty("nacos.standalone", "true");
+        // 是否开启认证
+        System.setProperty("nacos.core.auth.enabled", "false");
+        // 日志目录
+        // System.setProperty("server.tomcat.basedir", LogDirUtil.getLogDir() + "/nacos");
         return true;
     }
 }

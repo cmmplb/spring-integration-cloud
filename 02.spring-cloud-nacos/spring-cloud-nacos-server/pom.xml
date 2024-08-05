@@ -17,37 +17,65 @@
     <!-- 项目名称 -->
     <name>${project.artifactId}</name>
     <!-- 描述信息 -->
-    <description>spring-cloud-nacos-server</description>
+    <description>nacos源码启动调试</description>
+
+    <properties>
+        <nacos.version>1.4.0</nacos.version>
+    </properties>
 
     <!-- 依赖 -->
     <dependencies>
         <!-- core模块 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.cmmplb</groupId>
             <artifactId>spring-boot-starter-core</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>nacos-config</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
-            <artifactId>nacos-config</artifactId>
-            <version>${nacos.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>nacos-naming</artifactId>
             <version>${nacos.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>nacos-istio</artifactId>
             <version>${nacos.version}</version>
+        </dependency>
+
+        <!-- log -->
+        <!-- log4j通过slf4j来代理 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <!-- apache commons logging通过slf4j来代理 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <!-- java.util.logging 通过slf4j来代理 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <!-- log -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 </project>

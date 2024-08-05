@@ -1,5 +1,7 @@
 package com.cmmplb.auth2.auth.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,10 +13,14 @@ import java.security.Principal;
  * @since jdk 1.8
  */
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/user")
 public class UserController {
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
+
+    /**
+     * 提供user-info-uri端点
+     */
+    @RequestMapping("/info")
+    public Authentication info() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

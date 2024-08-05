@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021-04-01 21:07:28
  */
 
-@Slf4j
 @EnableResourceServer
 @SpringBootApplication
 public class AuthApplication {

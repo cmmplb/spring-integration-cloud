@@ -25,8 +25,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 根据角色编码集合获取关联的权限编码集合
-     * @param roleCodesStr 角色编码集合字符串 admin,user
+     * @param roleCodes 角色编码集合
      * @return 权限编码集合
      */
-    List<String> selectPermissionCodesByRoleCodes(@Param("roleCodesStr") String roleCodesStr);
+    List<String> selectPermissionCodesByRoleCodes(@Param("roleCodes") List<String> roleCodes);
 }
