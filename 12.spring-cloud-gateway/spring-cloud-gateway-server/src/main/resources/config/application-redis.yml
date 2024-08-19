@@ -1,0 +1,10 @@
+spring:
+  redis:
+    # 数据库索引
+    database: 0
+    # redis主机地址
+    host: 127.0.0.1
+    # redis主机端口
+    port: 6379
+    # redis主机密码
+    password: cmmplb

@@ -1,0 +1,41 @@
+# 服务端口
+server.port: @gateway.port@
+# 路径
+server.servlet.context-path: /
+# 关闭banner
+spring.main.banner-mode: off
+# 应用程序名称
+spring.application.name: @project.artifactId@
+# 覆盖相同名称的bean，spring中默认是true，默认支持名称相同的bean的覆盖。而springboot中的默认值是false
+spring.main.allow-bean-definition-overriding: true
+# 激活配置
+#spring.profiles.active: @profiles.active@
+spring.profiles.active: local
+# spring2.4+分组配置
+spring.profiles.group:
+  local:
+    - gateway
+    - logging
+    - management
+    - redis
+  prod:
+    - prod
+    - management
+    - gateway
+    - logging
+# =====================================================================================
+#===============================local===============================
+---
+spring.config.activate.on-profile: local
+# 本地服务注册
+spring.cloud.nacos.discovery.server-addr: localhost:8848
+# 关闭配置拉取
+spring.cloud.nacos.config.enabled: false
+spring.cloud.nacos.config.server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#===============================prod=================================
+---
+spring.config.activate.on-profile: prod
+spring.cloud.nacos.discovery.server-addr: localhost:8848
+spring.cloud.nacos.config.server-addr: ${spring.cloud.nacos.discovery.server-addr}
+# 支持引用的配置动态刷新-> @Value("") ，nacos修改值后不用重启服务动态刷新，需要在引用配置的类名加上 @RefreshScope //配置热更新
+spring.cloud.nacos.config.refresh-enabled: true

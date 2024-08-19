@@ -3,8 +3,10 @@ package com.cmmplb.security.oauth2.starter.configuration;
 import com.cmmplb.core.exception.BusinessException;
 import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
 import com.cmmplb.security.oauth2.starter.configuration.properties.RestTemplateProperties;
+import com.cmmplb.security.oauth2.starter.converter.UserConverter;
 import com.cmmplb.security.oauth2.starter.converter.UserPrincipalExtractor;
 import com.cmmplb.security.oauth2.starter.handler.AccessDeniedHandler;
+import com.cmmplb.security.oauth2.starter.impl.RemoteTokenServicesImpl;
 import com.cmmplb.security.oauth2.starter.impl.SecurityPermissionServiceImpl;
 import com.cmmplb.security.oauth2.starter.impl.TokenEnhancerImpl;
 import com.cmmplb.security.oauth2.starter.service.SecurityPermissionService;
@@ -59,7 +61,6 @@ import java.util.Objects;
 
 @Slf4j
 @SuppressWarnings("JavadocReference")
-@AllArgsConstructor
 @EnableGlobalAuthentication
 @EnableConfigurationProperties({RestTemplateProperties.class, Oauth2ConfigProperties.class})
 public class ResourceAutoConfiguration {
@@ -135,13 +136,15 @@ public class ResourceAutoConfiguration {
         }
         // 使用代码配置，会覆盖配置文件中实例，org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerTokenServicesConfiguration.RemoteTokenServicesConfiguration.UserInfoTokenServicesConfiguration.userInfoTokenServices
         if (resourceServerProperties.isPreferTokenInfo()) {
-            org.springframework.security.oauth2.provider.token.RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
+            RemoteTokenServices remoteTokenServices = new RemoteTokenServicesImpl();
             remoteTokenServices.setRestTemplate(restTemplate());
             // 通过org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration
             // 从OAuth2ClientProperties把clientId和clientSecret设置到ResourceServerProperties
             remoteTokenServices.setClientId(resourceServerProperties.getClientId());
             remoteTokenServices.setClientSecret(resourceServerProperties.getClientSecret());
             remoteTokenServices.setCheckTokenEndpointUrl(resourceServerProperties.getTokenInfoUri());
+            // 自定义用户信息解析器
+            remoteTokenServices.setAccessTokenConverter(accessTokenConverter());
             return remoteTokenServices;
         } else {
             UserInfoTokenServices userInfoTokenServices = new UserInfoTokenServices(
@@ -212,13 +215,13 @@ public class ResourceAutoConfiguration {
      */
     @Bean
     public AccessTokenConverter accessTokenConverter() {
-        AccessTokenConverter accessTokenConverter;
         if (oauth2ConfigProperties.getTokenStoreType().equals(Oauth2ConfigProperties.TokenStoreType.JWT)) {
-            accessTokenConverter = jwtAccessTokenConverter();
+            return jwtAccessTokenConverter();
         } else {
-            accessTokenConverter = new DefaultAccessTokenConverter();
+            DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+            defaultAccessTokenConverter.setUserTokenConverter(new UserConverter());
+            return defaultAccessTokenConverter;
         }
-        return accessTokenConverter;
     }
 
     /**

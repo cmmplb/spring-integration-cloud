@@ -1,6 +1,7 @@
 package com.cmmplb.security.oauth2.starter.converter;
 
 import cn.hutool.core.convert.Convert;
+import com.cmmplb.core.utils.ObjectUtil;
 import com.cmmplb.security.oauth2.starter.constants.Oauth2Constants;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,15 +22,21 @@ public class UserConverter implements UserAuthenticationConverter {
 
     private static final String N_A = "N/A";
 
+    private static final String PRINCIPAL = "principal";
+
     /**
-     * 通过DefaultAccessTokenConverter.convertAccessToken方法
-     * 调用自定义的convertUserAuthentication将授权信息返回到资源服务
+     * org.springframework.security.oauth2.provider.token.AccessTokenConverter#convertAccessToken(org.springframework.security.oauth2.common.OAuth2AccessToken, org.springframework.security.oauth2.provider.OAuth2Authentication)
+     * 获取令牌中的用户信息，转换成LinkedHashMap
      * @return
      */
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> authMap = new LinkedHashMap<>();
         authMap.put(USERNAME, authentication.getName());
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            authMap.put(PRINCIPAL, principal);
+        }
         if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
             authMap.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
         }
@@ -37,17 +44,29 @@ public class UserConverter implements UserAuthenticationConverter {
     }
 
     /**
-     * 获取用户认证信息
+     * 通过上一步提取到的map集合，构建Authentication对象
      * @return
      */
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
             Collection<? extends SimpleGrantedAuthority> authorities = getAuthorities(map);
-            Long userId = Convert.toLong(map.get(Oauth2Constants.DETAILS_USER_ID));
-            String username = map.get(Oauth2Constants.DETAILS_USERNAME).toString();
-            User user = new User(userId, username, N_A, true, true, true, authorities);
-            return new UsernamePasswordAuthenticationToken(user, N_A, authorities);
+            Object principal = map.get(USERNAME);
+            // 可以从最外层map获取
+            // Long userId = Convert.toLong(map.get(Oauth2Constants.DETAILS_USER_ID));
+            // String username = map.get(Oauth2Constants.DETAILS_USERNAME).toString();
+            if (map.containsKey(PRINCIPAL)) {
+                // 也可以从上面封装的principal获取
+                LinkedHashMap<String, Object> res = ObjectUtil.cast(map.get(PRINCIPAL));
+                Long userId = Convert.toLong(map.get(Oauth2Constants.DETAILS_USER_ID));
+                String username = map.get(Oauth2Constants.DETAILS_USERNAME).toString();
+                Boolean accountNonExpired = Convert.toBool(res.get(User.COLUMN_ACCOUNT_NON_EXPIRED));
+                Boolean credentialsNonExpired = Convert.toBool(res.get(User.COLUMN_CREDENTIALS_NON_EXPIRED));
+                Boolean accountNonLocked = Convert.toBool(res.get(User.COLUMN_ACCOUNT_NON_LOCKED));
+                User user = new User(userId, username, N_A, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+                return new UsernamePasswordAuthenticationToken(user, N_A, authorities);
+            }
+            return new UsernamePasswordAuthenticationToken(principal, N_A, authorities);
         }
         return null;
     }

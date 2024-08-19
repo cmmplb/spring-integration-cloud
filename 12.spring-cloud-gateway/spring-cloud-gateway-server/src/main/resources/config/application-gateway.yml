@@ -1,0 +1,60 @@
+# gateway配置详解：https://www.cnblogs.com/crazymakercircle/p/11704077.html
+spring:
+  # 设置缓冲区,默认的最大值为26214, 256 * 1024, 256k, 这里设置为20M
+  codec.max-in-memory-size: 20MB
+  cloud:
+    gateway:
+      httpclient:
+        # 连接超时以毫秒为单位, 默认值为45秒
+        connect-timeout: 5000
+        # 响应超时, Duration类型
+        response-timeout: 1000s
+      discovery:
+        locator:
+          # 开启DiscoveryClient网关集成, 创建默认的路由规则, 以服务名开头的请求路径转发到对应的服务。
+          # 如果配置文件中添加了其他规则, 则两个规则会同时存在, 并且都会生效。
+          enabled: true
+          # 使用小写服务名, 默认false
+          lower-case-service-id: true
+      # 路由配置
+      routes:
+        # ========================服务模块========================
+        # id要确保唯一性
+        - id: spring_cloud_gateway_service
+          # 路由目标地址
+          # uri: http://localhost:30000
+          # 路由目标地址,负载均衡
+          uri: lb://spring-cloud-gateway-service
+          # 路由断言
+          predicates:
+            - Path=/service/**
+          # 过滤配置, 例如 /service/info 的请求时，StripPrefix=1 将会去除 /service 前缀，将最终的请求路径转发到 http://服务模块/info。
+          filters:
+            # 去除路径1个前缀
+            - StripPrefix=1
+            # RequestRateLimiterGatewayFilterFactory
+            # - name: RequestRateLimiter
+            # 使用自定义限流过滤器，添加响应状态码，GatewayRequestRateLimiterGatewayFilterFactory，后面的GatewayFilterFactory省略
+            - name: GatewayRequestRateLimiter
+              args:
+                # 使用SpEL表达式从Spring容器中获取,根据请求路径限流
+                key-resolver: '#{@hostAddrKeyResolver}'
+                # 令牌桶每秒填充平均速率,即
+                redis-rate-limiter.replenishRate: 1
+                # 每个请求需要的令牌数
+                redis-rate-limiter.requestedTokens: 1
+                # 令牌桶的总容量
+                redis-rate-limiter.burstCapacity: 1
+
+      # gateway的全局跨域请求配置
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            # 报错：When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header. To allow credentials to a set of origins, list them explicitly or consider using
+            # allowedOrigins: "*"
+            allowedOriginPatterns: "*"
+            allowCredentials: true
+            allowedMethods: "*"
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Vary, RETAIN_UNIQUE

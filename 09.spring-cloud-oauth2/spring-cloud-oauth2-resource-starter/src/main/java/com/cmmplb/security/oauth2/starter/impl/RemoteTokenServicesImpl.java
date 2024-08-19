@@ -3,7 +3,10 @@ package com.cmmplb.security.oauth2.starter.impl;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.cmmplb.core.constants.CacheConstant;
+import com.cmmplb.security.oauth2.starter.converter.UserConverter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +18,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -29,7 +33,7 @@ import java.util.Map;
 
 @Slf4j
 @Setter
-public class RemoteTokenServicesImpl extends org.springframework.security.oauth2.provider.token.RemoteTokenServices {
+public class RemoteTokenServicesImpl extends RemoteTokenServices {
 
     private String checkTokenEndpointUrl;
 
@@ -39,10 +43,19 @@ public class RemoteTokenServicesImpl extends org.springframework.security.oauth2
 
     private String tokenName = "token";
 
-    private AccessTokenConverter tokenConverter = new DefaultAccessTokenConverter();
+    private static final DefaultAccessTokenConverter TOKEN_CONVERTER = new DefaultAccessTokenConverter();
+
+    static {
+        TOKEN_CONVERTER.setUserTokenConverter(new UserConverter());
+    }
 
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
+        // Object o = redisService.get(CacheConstant.REMOTE_TOKEN_SERVICES + accessToken);
+        // if (null != o) {
+        //     return TOKEN_CONVERTER.extractAuthentication(JSONObject.parseObject(o.toString(), new TypeReference<JSONObject>() {
+        //     }));
+        // }
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", getAuthorizationHeader(clientId, clientSecret));
@@ -60,8 +73,8 @@ public class RemoteTokenServicesImpl extends org.springframework.security.oauth2
             log.debug("check_token returned active attribute: " + map.get("active"));
             throw new InvalidTokenException(accessToken);
         }
-
-        return tokenConverter.extractAuthentication(map);
+        // redisService.set(CacheConstant.REMOTE_TOKEN_SERVICES + accessToken, JSON.toJSONString(res), 60);
+        return TOKEN_CONVERTER.extractAuthentication(map);
     }
 
     private String getAuthorizationHeader(String clientId, String clientSecret) {

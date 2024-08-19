@@ -1,0 +1,22 @@
+# actuator（http://blog.battcn.com/2018/05/24/springboot/v2-actuator-introduce/）
+
+# 描述信息
+info:
+  blog-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/info
+  author: cmmplb
+  version: 1.0.0
+
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+  endpoint:
+    health:
+      show-details: always
+
+    # 可以关闭制定的端点
+    shutdown:
+      enabled: false

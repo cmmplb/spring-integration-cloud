@@ -1,8 +1,6 @@
 package com.cmmplb.oauth2.client;
 
 import com.cmmplb.core.utils.SpringApplicationUtil;
-import com.cmmplb.security.oauth2.starter.annotation.EnableResourceServer;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 

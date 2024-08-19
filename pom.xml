@@ -34,5 +34,6 @@
         <module>09.spring-cloud-oauth2</module>
         <module>10.spring-cloud-seata-eureka</module>
         <module>11.spring-cloud-seata-nacos</module>
+        <module>12.spring-cloud-gateway</module>
     </modules>
 </project>

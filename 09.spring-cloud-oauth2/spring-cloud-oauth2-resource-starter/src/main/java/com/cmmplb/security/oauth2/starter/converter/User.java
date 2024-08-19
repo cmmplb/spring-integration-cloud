@@ -41,4 +41,7 @@ public class User extends org.springframework.security.core.userdetails.User {
 
     public static final String COLUMN_AUTHORITIES = "authorities";
 
+    public static final String COLUMN_ADDITIONAL_INFORMATION = "additionalInformation";
+
+
 }
