@@ -28,7 +28,7 @@ import reactor.core.publisher.Mono;
  */
 
 @Slf4j
-@Component
+// @Component
 public class ModifyResponseBodyGatewayFilter implements GlobalFilter, Ordered {
 
     @Autowired

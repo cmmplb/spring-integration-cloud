@@ -14,6 +14,7 @@ spring.profiles.active: @profiles.active@
 spring.profiles.group:
   local:
     - context
+    - exception
     - logging
     - management
     - tomcat

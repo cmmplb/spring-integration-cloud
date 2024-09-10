@@ -70,8 +70,13 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
         if (StringUtil.isBlank(message)) {
             message = HttpCodeEnum.getMessage(code);
         }
-        // 错误记录
-        log.error("url:{}", request.getPath(), ex);
+
+        if (ex instanceof BusinessException) {
+            log.info("url:{},error:{}", request.getPath(), ex.getMessage());
+        } else {
+            log.error("url:{}", request.getPath(), ex);
+        }
+
 
         response.setStatusCode(httpStatus);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);

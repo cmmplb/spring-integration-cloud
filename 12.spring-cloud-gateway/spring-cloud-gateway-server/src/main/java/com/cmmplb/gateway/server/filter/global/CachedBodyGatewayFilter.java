@@ -1,5 +1,6 @@
 package com.cmmplb.gateway.server.filter.global;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.EnableBodyCachingEvent;
 import org.springframework.cloud.gateway.filter.AdaptCachedBodyGlobalFilter;
@@ -31,6 +32,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  * getPublisher().publishEvent(new EnableBodyCachingEvent(this, routeId));
  */
 
+@Slf4j
 @Component
 public class CachedBodyGatewayFilter implements GlobalFilter, Ordered {
 
@@ -39,6 +41,7 @@ public class CachedBodyGatewayFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.info("CachedBodyGatewayFilter-缓存请求参数过滤器");
         Route route = exchange.getAttribute(GATEWAY_ROUTE_ATTR);
         if (route != null) {
             EnableBodyCachingEvent enableBodyCachingEvent = new EnableBodyCachingEvent(new Object(), route.getId());

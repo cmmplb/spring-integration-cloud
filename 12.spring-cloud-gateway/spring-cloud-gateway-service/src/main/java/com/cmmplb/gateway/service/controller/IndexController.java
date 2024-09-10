@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,5 +25,19 @@ public class IndexController {
         log.info("params:{}", params);
         params.put("info", "Hello World!");
         return ResultUtil.success(params);
+    }
+
+    @RequestMapping("/info/params")
+    public Result<Map<String, Object>> params(@RequestBody Map<String, Object> params) {
+        log.info("params:{}", params);
+        params = new HashMap<>();
+        params.put("info", "Hello World!");
+        return ResultUtil.success(params);
+    }
+
+    @RequestMapping("/info/string")
+    public String string(@RequestBody Map<String, Object> params) {
+        log.info("params:{}", params);
+        return "Hello World!";
     }
 }

@@ -1,5 +1,6 @@
 package com.cmmplb.gateway.server.filter.global;
 
+import com.cmmplb.core.exception.BusinessException;
 import com.cmmplb.gateway.server.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.ModifyRequestBodyGatewayFilterFactory;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -28,7 +30,7 @@ import reactor.core.publisher.Mono;
  */
 
 @Slf4j
-@Component
+// @Component
 public class ModifyRequestBodyGatewayFilter implements GlobalFilter, Ordered {
 
     @Autowired
@@ -38,12 +40,11 @@ public class ModifyRequestBodyGatewayFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("------------------------------------------");
         log.info("请求处理......");
-        ServerHttpRequest request = exchange.getRequest();
-        String params = RequestUtil.getRequestBodyFormRequest(exchange);
+        String params = RequestUtil.getRequestBodyFormExchange(exchange);
         log.info("params:{}", params);
-        String requestBodyFormRequest = RequestUtil.getRequestBodyFormRequest(request);
-        log.info("requestBodyFormRequest:{}", requestBodyFormRequest);
-
+        if (false) {
+            return Mono.error(new BusinessException(HttpStatus.BAD_REQUEST.value(), "测试直接返回结果"));
+        }
         // 修改请求体,对下游服务请求参数添加一个request字段,第一个参数为原请求体类型,第二个参数为修改后请求体类型,第三个参数为修改请求体函数
         return modifyRequestBodyOne(exchange, chain);
         // return modifyRequestBody(exchange, chain);
