@@ -25,3 +25,6 @@ hs_err_pid*
 *.idea
 *.iml
 *target*
+
+# 依赖版本配置文件
+.flattened-pom.xml
