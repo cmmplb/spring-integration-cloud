@@ -65,6 +65,11 @@
        reporting：项目的报告输出目录配置，报告插件配置
    -->
 
+    <!-- 版本依赖定义 -->
+    <properties>
+        <revision>2020.0.6.1</revision>
+    </properties>
+
     <!-- 子模块 -->
     <modules>
         <module>01.spring-cloud-eureka</module>
