@@ -1,7 +1,7 @@
 package com.cmmplb.gateway.service.controller;
 
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +38,11 @@ public class IndexController {
     @RequestMapping("/info/string")
     public String string(@RequestBody Map<String, Object> params) {
         log.info("params:{}", params);
+        return "Hello World!";
+    }
+
+    @RequestMapping("/test")
+    public String test() {
         return "Hello World!";
     }
 }

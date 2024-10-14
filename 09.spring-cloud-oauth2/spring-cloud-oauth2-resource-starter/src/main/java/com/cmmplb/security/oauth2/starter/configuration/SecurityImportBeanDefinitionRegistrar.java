@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.starter.configuration;
 
-import com.cmmplb.core.utils.StringUtil;
+import io.github.cmmplb.core.utils.StringUtil;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;

@@ -1,16 +1,10 @@
 package com.cmmplb.security.oauth2.starter.handler;
 
-import com.cmmplb.core.result.HttpCodeEnum;
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
-import io.lettuce.core.RedisCommandExecutionException;
+import io.github.cmmplb.core.result.HttpCodeEnum;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
-
-import java.net.UnknownHostException;
 
 /**
  * @author penglibo
@@ -19,7 +13,7 @@ import java.net.UnknownHostException;
  */
 
 @Slf4j
-public class GlobalExceptionHandler<T> extends com.cmmplb.core.handler.GlobalExceptionHandler<T> {
+public class GlobalExceptionHandler<T> extends io.github.cmmplb.core.handler.GlobalExceptionHandler<T> {
 
     @Override
     public Result<?> exceptionHandler(Exception e) {

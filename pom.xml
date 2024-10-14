@@ -5,15 +5,15 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-parent</artifactId>
-        <groupId>com.cmmplb</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>2.5.15.2</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
     <!-- 项目的唯一的标识符，实际对应项目的名称，就是项目根目录的名称。 -->
     <artifactId>spring-integration-cloud</artifactId>
     <!-- 项目版本 -->
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <!-- 项目的打包类型：pom、jar、war -->
     <packaging>pom</packaging>
     <!-- 项目名称 -->
@@ -24,6 +24,46 @@
     <inceptionYear>2021</inceptionYear>
     <!-- 项目URL地址 -->
     <url>https://gitee.com/cmmplb/spring-integration-cloud.git</url>
+    <!-- 开源协议 -->
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <!--开发者相关信息-->
+    <developers>
+        <developer>
+            <id>cmmplb</id>
+            <name>penglibo</name>
+            <email>cmmplb@163.com</email>
+        </developer>
+    </developers>
+
+    <!-- 项目信息,scm:git:不变，后面改成克隆仓库时的https地址 -->
+    <scm>
+        <connection>scm:git:https://gitee.com/cmmplb/spring-integration-cloud.git</connection>
+        <developerConnection>scm:git:https://gitee.com/cmmplb/spring-integration-cloud.git</developerConnection>
+        <url>https://gitee.com/cmmplb/spring-integration-cloud.git</url>
+    </scm>
+
+    <!--
+       更多配置信息:
+       organization组织信息
+       developers开发者信息
+       issueManagement项目缺陷跟踪系统信息
+       ciManagement项目持续集成系统信息
+       scm：项目版本控制系统信息
+       mailingLists：邮件列表
+       properties：自定义属性
+       dependencies：依赖配置
+       dependencyManagement：依赖配置管理
+       pluginManagement: 插件依赖配置
+       repositories：仓库配置
+       build：构建信息，包括源码目录，输出目录，插件配置，插件管理配置
+       reporting：项目的报告输出目录配置，报告插件配置
+   -->
 
     <!-- 子模块 -->
     <modules>

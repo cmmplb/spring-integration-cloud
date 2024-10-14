@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.starter.handler.exceptions;
 
-import com.cmmplb.core.result.HttpCodeEnum;
+import io.github.cmmplb.core.result.HttpCodeEnum;
 
 /**
  * @author penglibo

@@ -1,7 +1,7 @@
 package com.cmmplb.oauth2.system.controller;
 
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
 import com.cmmplb.oauth2.system.service.UserService;
 import com.cmmplb.security.oauth2.starter.annotation.WithoutLogin;
 import com.cmmplb.security.oauth2.starter.converter.UserInfoVO;

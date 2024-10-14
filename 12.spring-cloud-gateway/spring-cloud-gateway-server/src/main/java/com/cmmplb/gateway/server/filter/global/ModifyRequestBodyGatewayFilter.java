@@ -1,6 +1,6 @@
 package com.cmmplb.gateway.server.filter.global;
 
-import com.cmmplb.core.exception.BusinessException;
+import io.github.cmmplb.core.exception.BusinessException;
 import com.cmmplb.gateway.server.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

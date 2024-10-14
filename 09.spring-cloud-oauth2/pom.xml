@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!-- 父工程 -->
+        <!-- 父工程 -->
     <parent>
         <artifactId>spring-integration-cloud</artifactId>
-        <groupId>com.cmmplb</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>${revision}</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
@@ -51,7 +51,7 @@
         <dependencies>
             <!-- oauth2-start模块 -->
             <dependency>
-                <groupId>com.cmmplb</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>spring-cloud-oauth2-resource-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>

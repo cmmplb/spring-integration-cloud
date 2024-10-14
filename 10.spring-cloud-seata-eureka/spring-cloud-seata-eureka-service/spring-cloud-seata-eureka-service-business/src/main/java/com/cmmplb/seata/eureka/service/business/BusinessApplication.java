@@ -1,7 +1,7 @@
 package com.cmmplb.seata.eureka.service.business;
 
 
-import com.cmmplb.core.utils.SpringApplicationUtil;
+import io.github.cmmplb.core.utils.SpringApplicationUtil;
 import com.cmmplb.seata.eureka.service.business.config.TestConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

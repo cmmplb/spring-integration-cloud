@@ -1,9 +1,9 @@
 package com.cmmplb.kubernetes.loadbalancer.api.provider.client.fallback;
 
-import com.cmmplb.core.exception.CustomException;
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
-import com.cmmplb.core.utils.ObjectUtil;
+import io.github.cmmplb.core.exception.CustomException;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.utils.ObjectUtil;
 import com.cmmplb.kubernetes.loadbalancer.api.provider.client.RemoteProviderFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;

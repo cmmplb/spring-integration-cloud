@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cmmplb.core.exception.CustomException;
+import io.github.cmmplb.core.exception.CustomException;
 import com.cmmplb.oauth2.system.dao.UserMapper;
 import com.cmmplb.oauth2.system.entity.User;
 import com.cmmplb.oauth2.system.service.UserService;

@@ -2,18 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!-- 父工程 -->
+        <!-- 父工程 -->
     <parent>
         <artifactId>spring-integration-cloud</artifactId>
-        <groupId>com.cmmplb</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>${revision}</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
     <!-- 项目的唯一的标识符，实际对应项目的名称，就是项目根目录的名称。 -->
     <artifactId>spring-cloud-seata-nacos</artifactId>
-    <!-- 项目ID，项目坐标核心元素，项目组织唯一的标识符，实际对应JAVA的包的结构，是main目录里java的目录结构。 -->
-    <groupId>com.cmmplb.seata</groupId>
     <!-- 项目的打包类型：pom、jar、war -->
     <packaging>pom</packaging>
     <!-- 项目名称 -->
@@ -44,25 +42,25 @@
         <dependencies>
             <!-- common模块 -->
             <dependency>
-                <groupId>com.cmmplb.seata</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>spring-cloud-seata-nacos-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- common-db模块 -->
             <dependency>
-                <groupId>com.cmmplb.seata</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>spring-cloud-seata-nacos-common-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- business模块 -->
             <dependency>
-                <groupId>com.cmmplb.seata</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>spring-cloud-seata-nacos-api-business</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- user模块 -->
             <dependency>
-                <groupId>com.cmmplb.seata</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>spring-cloud-seata-nacos-api-user</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -5,8 +5,8 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-cloud-seata-nacos-service</artifactId>
-        <groupId>com.cmmplb.seata</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>${revision}</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
@@ -23,7 +23,7 @@
     <dependencies>
         <!-- user模块 -->
         <dependency>
-            <groupId>com.cmmplb.seata</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>spring-cloud-seata-nacos-api-user</artifactId>
         </dependency>
     </dependencies>

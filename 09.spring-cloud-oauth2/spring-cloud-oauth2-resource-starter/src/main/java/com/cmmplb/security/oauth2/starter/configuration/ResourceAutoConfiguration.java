@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.starter.configuration;
 
-import com.cmmplb.core.exception.BusinessException;
+import io.github.cmmplb.core.exception.BusinessException;
 import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
 import com.cmmplb.security.oauth2.starter.configuration.properties.RestTemplateProperties;
 import com.cmmplb.security.oauth2.starter.converter.UserConverter;

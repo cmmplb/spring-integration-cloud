@@ -1,8 +1,8 @@
 package com.cmmplb.security.oauth2.starter.converter;
 
 import cn.hutool.core.convert.Convert;
-import com.cmmplb.core.utils.ObjectUtil;
-import com.cmmplb.security.oauth2.starter.constants.Oauth2Constants;
+import io.github.cmmplb.core.utils.ObjectUtil;
+import com.cmmplb.security.oauth2.starter.constants.Oauth2Constant;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -58,8 +58,8 @@ public class UserConverter implements UserAuthenticationConverter {
             if (map.containsKey(PRINCIPAL)) {
                 // 也可以从上面封装的principal获取
                 LinkedHashMap<String, Object> res = ObjectUtil.cast(map.get(PRINCIPAL));
-                Long userId = Convert.toLong(map.get(Oauth2Constants.DETAILS_USER_ID));
-                String username = map.get(Oauth2Constants.DETAILS_USERNAME).toString();
+                Long userId = Convert.toLong(map.get(Oauth2Constant.DETAILS_USER_ID));
+                String username = map.get(Oauth2Constant.DETAILS_USERNAME).toString();
                 Boolean accountNonExpired = Convert.toBool(res.get(User.COLUMN_ACCOUNT_NON_EXPIRED));
                 Boolean credentialsNonExpired = Convert.toBool(res.get(User.COLUMN_CREDENTIALS_NON_EXPIRED));
                 Boolean accountNonLocked = Convert.toBool(res.get(User.COLUMN_ACCOUNT_NON_LOCKED));

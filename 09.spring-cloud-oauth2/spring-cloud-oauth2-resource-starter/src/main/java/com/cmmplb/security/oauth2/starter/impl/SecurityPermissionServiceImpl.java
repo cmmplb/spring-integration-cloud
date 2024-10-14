@@ -1,7 +1,7 @@
 package com.cmmplb.security.oauth2.starter.impl;
 
-import com.cmmplb.core.constants.StringConstant;
-import com.cmmplb.core.utils.StringUtil;
+import io.github.cmmplb.core.constants.StringConstant;
+import io.github.cmmplb.core.utils.StringUtil;
 import com.cmmplb.security.oauth2.starter.converter.User;
 import com.cmmplb.security.oauth2.starter.service.SecurityPermissionService;
 import com.cmmplb.security.oauth2.starter.utils.SecurityUtil;

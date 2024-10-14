@@ -4,7 +4,7 @@ package com.cmmplb.business.service.impl;
 import com.cmmplb.business.entity.Log;
 import com.cmmplb.business.service.BusinessService;
 import com.cmmplb.business.service.LogService;
-import com.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.Result;
 import com.cmmplb.user.client.UserFeignClient;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;

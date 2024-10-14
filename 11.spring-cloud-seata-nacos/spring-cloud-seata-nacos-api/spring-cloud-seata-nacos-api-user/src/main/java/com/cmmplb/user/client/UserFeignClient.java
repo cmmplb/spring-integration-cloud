@@ -1,7 +1,7 @@
 package com.cmmplb.user.client;
 
 
-import com.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.Result;
 import com.cmmplb.user.fallback.UserFeignClientFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

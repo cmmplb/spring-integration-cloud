@@ -2,16 +2,17 @@ package com.cmmplb.auth2.auth.controller;
 
 import com.cmmplb.auth2.auth.dto.OauthToken;
 import com.cmmplb.auth2.auth.dto.RefreshInfoDTO;
-import com.cmmplb.core.constants.SecurityConstant;
-import com.cmmplb.core.exception.CustomException;
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
-import com.cmmplb.core.utils.ObjectUtil;
-import com.cmmplb.core.utils.StringUtil;
-import com.cmmplb.redis.service.RedisService;
+import com.cmmplb.security.oauth2.starter.constants.Oauth2Constant;
+import io.github.cmmplb.core.constants.SecurityConstant;
+import io.github.cmmplb.core.exception.CustomException;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.utils.ObjectUtil;
+import io.github.cmmplb.core.utils.StringUtil;
+import io.github.cmmplb.redis.service.RedisService;
 import com.cmmplb.security.oauth2.starter.annotation.WithoutLogin;
 import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
-import com.cmmplb.security.oauth2.starter.constants.CacheConstants;
+import com.cmmplb.security.oauth2.starter.constants.CacheConstant;
 import com.cmmplb.security.oauth2.starter.converter.User;
 import com.cmmplb.security.oauth2.starter.service.UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
@@ -92,11 +93,11 @@ public class LoginController {
             oAuth2AccessToken = tokenEndpoint.postAccessToken(usernamePasswordAuthentication, params);
         } catch (InvalidGrantException e) {
             log.error("error:", e);
-            throw new CustomException(SecurityConstant.BAD_CREDENTIALS);
+            throw new CustomException(Oauth2Constant.BAD_CREDENTIALS);
         }
         OAuth2AccessToken accessTokenBody = oAuth2AccessToken.getBody();
         if (null == accessTokenBody) {
-            throw new CustomException(SecurityConstant.BAD_CREDENTIALS);
+            throw new CustomException(Oauth2Constant.BAD_CREDENTIALS);
         }
         Map<String, Object> additionalInformation = accessTokenBody.getAdditionalInformation();
         // 登陆成功,传递user_id，日志切面记录登陆日志
@@ -130,7 +131,7 @@ public class LoginController {
         List<String> usernames = dto.getUsernames();
         if (!CollectionUtils.isEmpty(usernames)) {
             for (String username : usernames) {
-                Object o = redisService.get(CacheConstants.LOGIN_ACCESS_TOKEN + username);
+                Object o = redisService.get(CacheConstant.LOGIN_ACCESS_TOKEN + username);
                 if (null != o) {
                     String token = o.toString();
                     OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);

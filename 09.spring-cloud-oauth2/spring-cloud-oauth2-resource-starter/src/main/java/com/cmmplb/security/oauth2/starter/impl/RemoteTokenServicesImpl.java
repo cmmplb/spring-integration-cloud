@@ -5,7 +5,7 @@ import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.cmmplb.core.constants.CacheConstant;
+import io.github.cmmplb.core.constants.CacheConstant;
 import com.cmmplb.security.oauth2.starter.converter.UserConverter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

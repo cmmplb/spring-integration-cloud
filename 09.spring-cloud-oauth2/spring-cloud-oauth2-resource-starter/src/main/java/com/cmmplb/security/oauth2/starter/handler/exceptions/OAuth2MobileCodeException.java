@@ -1,6 +1,6 @@
 package com.cmmplb.security.oauth2.starter.handler.exceptions;
 
-import com.cmmplb.core.result.HttpCodeEnum;
+import io.github.cmmplb.core.result.HttpCodeEnum;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**

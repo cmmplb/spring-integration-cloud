@@ -1,7 +1,7 @@
 package com.cmmplb.security.oauth2.starter.converter;
 
 import cn.hutool.core.convert.Convert;
-import com.cmmplb.core.utils.ObjectUtil;
+import io.github.cmmplb.core.utils.ObjectUtil;
 import com.cmmplb.security.oauth2.starter.utils.AuthorityUtil;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.util.ObjectUtils;

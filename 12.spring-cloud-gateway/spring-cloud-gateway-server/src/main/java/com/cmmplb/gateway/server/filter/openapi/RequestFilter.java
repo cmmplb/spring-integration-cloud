@@ -3,7 +3,7 @@ package com.cmmplb.gateway.server.filter.openapi;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.cmmplb.core.utils.StringUtil;
+import io.github.cmmplb.core.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;

@@ -5,8 +5,8 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-cloud-seata-nacos</artifactId>
-        <groupId>com.cmmplb.seata</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>${revision}</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
@@ -19,26 +19,30 @@
     <!-- 描述信息 -->
     <description>nacos注册配置中心</description>
 
+    <properties>
+        <nacos.version>1.4.7</nacos.version>
+    </properties>
+
     <!-- 依赖 -->
     <dependencies>
         <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
+            <groupId>io.github.cmmplb.nacos</groupId>
             <artifactId>nacos-config</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.cmmplb.nacos</groupId>
+            <artifactId>nacos-naming</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.cmmplb.nacos</groupId>
+            <artifactId>nacos-istio</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
-            <artifactId>nacos-naming</artifactId>
-            <version>${nacos.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pig4cloud.nacos</groupId>
-            <artifactId>nacos-istio</artifactId>
-            <version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

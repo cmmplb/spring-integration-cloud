@@ -1,7 +1,7 @@
 package com.cmmplb.seata.eureka.service.user.controller;
 
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
 import com.cmmplb.seata.eureka.service.user.entity.User;
 import com.cmmplb.seata.eureka.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

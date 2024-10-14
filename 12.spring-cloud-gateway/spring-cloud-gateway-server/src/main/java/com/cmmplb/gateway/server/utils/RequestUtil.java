@@ -3,7 +3,7 @@ package com.cmmplb.gateway.server.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.cmmplb.core.utils.ServletUtil;
+import io.github.cmmplb.core.utils.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.io.buffer.DataBuffer;

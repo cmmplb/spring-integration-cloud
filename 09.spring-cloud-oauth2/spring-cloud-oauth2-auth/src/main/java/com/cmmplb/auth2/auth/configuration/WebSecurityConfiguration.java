@@ -1,6 +1,6 @@
 package com.cmmplb.auth2.auth.configuration;
 
-import com.cmmplb.core.utils.MD5Util;
+import io.github.cmmplb.core.utils.MD5Util;
 import com.cmmplb.security.oauth2.starter.configuration.properties.Oauth2ConfigProperties;
 import com.cmmplb.security.oauth2.starter.mobile.MobileAuthenticationProvider;
 import com.cmmplb.security.oauth2.starter.service.UserDetailsService;

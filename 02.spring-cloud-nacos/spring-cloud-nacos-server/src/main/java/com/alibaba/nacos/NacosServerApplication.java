@@ -28,7 +28,6 @@ public class NacosServerApplication {
 
     public static void main(String[] args) {
         if (initEnv()) {
-            // SpringApplicationUtil.run(NacosServerApplication.class, args);
             SpringApplication.run(NacosServerApplication.class, args);
         }
     }

@@ -1,6 +1,6 @@
 package com.cmmplb.auth2.auth;
 
-import com.cmmplb.core.utils.SpringApplicationUtil;
+import io.github.cmmplb.core.utils.SpringApplicationUtil;
 import com.cmmplb.security.oauth2.starter.annotation.EnableResourceServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

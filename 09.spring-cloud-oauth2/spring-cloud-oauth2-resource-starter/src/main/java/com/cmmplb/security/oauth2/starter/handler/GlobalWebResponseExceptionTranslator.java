@@ -1,8 +1,8 @@
 package com.cmmplb.security.oauth2.starter.handler;
 
-import com.cmmplb.core.result.HttpCodeEnum;
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.result.ResultUtil;
+import io.github.cmmplb.core.result.HttpCodeEnum;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.ResultUtil;
 import com.cmmplb.security.oauth2.starter.handler.exceptions.MobileNotFoundException;
 import com.cmmplb.security.oauth2.starter.handler.exceptions.OAuth2MobileCodeException;
 import lombok.extern.slf4j.Slf4j;

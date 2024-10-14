@@ -1,9 +1,9 @@
 package com.cmmplb.security.oauth2.starter.utils;
 
-import com.cmmplb.core.utils.RandomUtil;
-import com.cmmplb.core.utils.SpringUtil;
-import com.cmmplb.redis.service.RedisService;
-import com.cmmplb.security.oauth2.starter.constants.CacheConstants;
+import io.github.cmmplb.core.utils.RandomUtil;
+import io.github.cmmplb.core.utils.SpringUtil;
+import com.cmmplb.security.oauth2.starter.constants.CacheConstant;
+import io.github.cmmplb.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -51,7 +51,7 @@ public class SmsCodeUtil {
      * 获取验证码的缓存Key
      */
     public static String getCaptchaKey(String mobile) {
-        return CacheConstants.SMS_CODE_PREFIX + mobile;
+        return CacheConstant.SMS_CODE_PREFIX + mobile;
     }
 
     /**

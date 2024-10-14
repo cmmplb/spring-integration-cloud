@@ -5,8 +5,8 @@
     <!-- 父工程 -->
     <parent>
         <artifactId>spring-cloud-kubernetes-loadbalancer-api</artifactId>
-        <groupId>com.cmmplb</groupId>
-        <version>1.0.0</version>
+        <groupId>io.github.cmmplb</groupId>
+        <version>${revision}</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>

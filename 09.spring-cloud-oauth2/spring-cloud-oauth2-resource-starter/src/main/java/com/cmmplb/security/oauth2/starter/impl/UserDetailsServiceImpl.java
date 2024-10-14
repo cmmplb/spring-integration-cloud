@@ -4,10 +4,10 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.cmmplb.core.result.HttpCodeEnum;
-import com.cmmplb.core.result.Result;
-import com.cmmplb.core.utils.StringUtil;
-import com.cmmplb.security.oauth2.starter.constants.Oauth2Constants;
+import io.github.cmmplb.core.result.HttpCodeEnum;
+import io.github.cmmplb.core.result.Result;
+import io.github.cmmplb.core.utils.StringUtil;
+import com.cmmplb.security.oauth2.starter.constants.Oauth2Constant;
 import com.cmmplb.security.oauth2.starter.converter.SimpleGrantedAuthority;
 import com.cmmplb.security.oauth2.starter.converter.User;
 import com.cmmplb.security.oauth2.starter.converter.UserInfoVO;
@@ -15,7 +15,6 @@ import com.cmmplb.security.oauth2.starter.handler.exceptions.MobileNotFoundExcep
 import com.cmmplb.security.oauth2.starter.service.UserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         // 直接用http调用
-        HttpResponse httpResponse = HttpRequest.get("http://localhost:40000/user/info/" + username).header(Oauth2Constants.SOURCE, Oauth2Constants.INNER).execute();
+        HttpResponse httpResponse = HttpRequest.get("http://localhost:40000/user/info/" + username).header(Oauth2Constant.SOURCE, Oauth2Constant.INNER).execute();
         Result<UserInfoVO> result = JSON.parseObject(httpResponse.body(), new TypeReference<Result<UserInfoVO>>() {
         });
         return getUserDetails(result);
@@ -44,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByMobile(String mobile) {
-        HttpResponse httpResponse = HttpRequest.get("http://localhost:40000/user/info/mobile/" + mobile).header(Oauth2Constants.SOURCE, Oauth2Constants.INNER).execute();
+        HttpResponse httpResponse = HttpRequest.get("http://localhost:40000/user/info/mobile/" + mobile).header(Oauth2Constant.SOURCE, Oauth2Constant.INNER).execute();
         Result<UserInfoVO> result = JSON.parseObject(httpResponse.body(), new TypeReference<Result<UserInfoVO>>() {
         });
         return getUserDetails(result);

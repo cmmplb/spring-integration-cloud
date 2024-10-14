@@ -1,6 +1,6 @@
 package com.cmmplb.gateway.server.filter.global;
 
-import com.cmmplb.core.utils.IpUtil;
+import io.github.cmmplb.core.utils.IpUtil;
 import com.cmmplb.gateway.server.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;

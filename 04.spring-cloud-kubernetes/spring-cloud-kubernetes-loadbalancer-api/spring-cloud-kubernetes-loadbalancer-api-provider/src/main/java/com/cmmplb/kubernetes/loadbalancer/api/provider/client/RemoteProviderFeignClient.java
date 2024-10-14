@@ -1,6 +1,6 @@
 package com.cmmplb.kubernetes.loadbalancer.api.provider.client;
 
-import com.cmmplb.core.result.Result;
+import io.github.cmmplb.core.result.Result;
 import com.cmmplb.kubernetes.loadbalancer.api.provider.client.fallback.RemoteProviderFeignClientFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
