@@ -18,8 +18,22 @@ master 分支为最新版本 2023.0.3.x：
 |---------------|----------------|--------------|----------------------|-------------------------|-----|
 | 2023.0.3.x    | 3.3.4          | 2023.0.3     | 2023.0.1.2           | 3.1.3                   | ✅   |
 | 2022.0.5.x    | 3.1.12         | 2022.0.5     | 2022.0.0.0           | 3.0.5                   | ❌   |
-| 2021.0.9.x    | 2.7.18         | 2021.0.9     | 2021.0.6.1           | 2.1.9                   | ❌   |
+| 2021.0.9.x    | 2.7.18         | 2021.0.9     | 2021.0.6.1           | 2.1.9                   | ✅   |
 | 2020.0.6.x    | 2.5.15         | 2020.0.6     | 2021.1               | 2.0.6                   | ✅   |
 | Hoxton.SR12.x | 2.3.12.RELEASE | Hoxton.SR12  | 2.2.10-RC2           | 1.1.10.RELEASE          | ❌   |
 
 **其他版本查看spring-parent.pom中配置的properties**
+
+当前分支： feature/2021.0.9.x，对比上一个版本 2020.0.6.x 的配置变化：
+
+1. `META-INF/spring.factories` 中 org.springframework.boot.autoconfigure.EnableAutoConfiguration
+   配置项改为在`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`中声明，不需要使用\，每行一个配置类
+
+***
+
+2. elasticsearch相关类包名更换（其他略）：
+
+   `org.elasticsearch.common.unit.TimeValue` => `org.elasticsearch.core.TimeValue`
+   `org.elasticsearch.common.xcontent.XContentBuilder` => `org.elasticsearch.xcontent.XContentBuilder`
+   `org.elasticsearch.common.xcontent.XContentFactory` => `org.elasticsearch.xcontent.XContentFactory`
+   `org.elasticsearch.common.xcontent.XContentType` => `org.elasticsearch.xcontent.XContentType`
