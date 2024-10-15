@@ -67,7 +67,7 @@
 
     <!-- 版本依赖定义 -->
     <properties>
-        <revision>2020.0.6.0</revision>
+        <revision>2021.0.9.0</revision>
     </properties>
 
     <!-- 子模块 -->
