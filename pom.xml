@@ -6,7 +6,7 @@
     <parent>
         <artifactId>spring-parent</artifactId>
         <groupId>io.github.cmmplb</groupId>
-        <version>2.7.18.0</version>
+        <version>3.1.12.0</version>
     </parent>
     <!-- 指定当前POM模型的版本 -->
     <modelVersion>4.0.0</modelVersion>
@@ -67,7 +67,7 @@
 
     <!-- 版本依赖定义 -->
     <properties>
-        <revision>2021.0.9.0</revision>
+        <revision>2022.0.5.0</revision>
     </properties>
 
     <!-- 子模块 -->
@@ -76,7 +76,7 @@
         <module>02.spring-cloud-nacos</module>
         <module>03.spring-cloud-apollo</module>
         <module>04.spring-cloud-kubernetes</module>
-        <module>09.spring-cloud-oauth2</module>
+<!--        <module>09.spring-cloud-oauth2</module>-->
         <module>10.spring-cloud-seata-eureka</module>
         <module>11.spring-cloud-seata-nacos</module>
         <module>12.spring-cloud-gateway</module>

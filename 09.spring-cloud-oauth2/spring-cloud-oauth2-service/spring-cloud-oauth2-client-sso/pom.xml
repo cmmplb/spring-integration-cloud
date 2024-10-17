@@ -22,10 +22,10 @@
     <!-- 依赖 -->
     <dependencies>
         <!-- security-oauth2 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

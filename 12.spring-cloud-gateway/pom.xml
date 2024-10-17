@@ -21,7 +21,6 @@
 
     <!-- 子模块 -->
     <modules>
-        <module>spring-cloud-gateway-nacos</module>
         <module>spring-cloud-gateway-server</module>
         <module>spring-cloud-gateway-service</module>
     </modules>

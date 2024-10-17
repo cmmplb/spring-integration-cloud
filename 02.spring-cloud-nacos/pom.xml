@@ -21,7 +21,6 @@
 
     <!-- 子模块 -->
     <modules>
-        <module>spring-cloud-nacos-server</module>
         <module>spring-cloud-nacos-client</module>
     </modules>
 

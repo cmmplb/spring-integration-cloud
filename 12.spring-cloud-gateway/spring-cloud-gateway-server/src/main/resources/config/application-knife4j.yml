@@ -1,0 +1,25 @@
+knife4j:
+  # 聚合swagger文档
+  gateway:
+    # 是否启用聚合OpenAPI规范文档聚合
+    enabled: true
+    # 服务发现(自动聚合)
+    strategy: discover
+    # 服务发现策略配置
+    discover:
+      # 是否开启服务发现
+      enabled: true
+      # 需要排除的服务名称(不区分大小写)支持正则表达式,多个逗号分隔,由于crbr-templatea-biz-center是/v2/api-docs,排除单独在routes配置
+      excludedServices: ^ingress.*,crbr-templatea-biz-center
+    # 认证
+    basic:
+      enable: true
+      username: admin
+      password: admin
+
+    # 手动配置聚合服务路由
+    routes:
+      - name: crbr-templatea-biz-center
+        url: /crbr-templatea-biz-center/v2/api-docs?group=default
+        service-name: crbr-templatea-biz-center
+        order: 2
