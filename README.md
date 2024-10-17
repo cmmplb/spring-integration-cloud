@@ -31,7 +31,15 @@ master 分支为最新版本 2023.0.3.x：
 - spring-cloud-square(类似feign)
 ````
 
-### 当前分支：feature/2021.0.9.x，对比上一个版本 2020.0.6.x 的配置变化和问题：**
+## 版本变化
+
+### 当前分支：feature/2023.0.3.x，对比上一个版本 2021.0.9.x 的配置变化和问题：
+
+...
+
+## 历史版本变化和问题
+
+### feature/2021.0.9.x，对比上一个版本 feature/2020.0.6.x 的变化：
 
 ****
 
@@ -197,8 +205,6 @@ if ((e instanceof BusinessException c)) {
 | mybatis-plus-boot-starter | 3.4.3.1 |     
 
 ****
-
-## 历史版本变化和问题
 
 ### feature/2.7.18.x，对比上一个版本 feature/2.5.15.x 的变化：
 
